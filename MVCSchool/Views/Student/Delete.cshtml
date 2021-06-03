@@ -1,0 +1,24 @@
+﻿@model MVCSchool.Models.Student
+
+@{ ViewBag.Title = "Delete"; }
+
+<div class="container-fluid mt-5">
+<h5>Are you sure you want to delete this Student?</h5>
+<p>Deleting this student,also deletes all associations.</p>
+<hr class="my-4" />
+<ul class="list-unstyled">
+    <li><strong>@Html.DisplayNameFor(s => s.FirstName)</strong> @Model.FirstName</li>
+    <li><strong>@Html.DisplayNameFor(s => s.LastName)</strong> @Model.LastName</li>
+    <li><strong>@Html.DisplayNameFor(s => s.TuitionFee)</strong> @Model.TuitionFee€</li>
+    <li><strong>@Html.DisplayNameFor(s => s.DateOfBirth)</strong> @Model.DateOfBirth.ToString("yyyy MMMM dd")</li>
+</ul>
+@using (Html.BeginForm("Delete", "Student", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <form class="form-group m-4 form-actions">
+        @Html.ActionLink("Return", "Student", null, new { @class = "btn btn-outline-info btn-sm" })
+
+        <input type="submit" value="Delete" class="btn btn-danger m-1" />
+    </form>
+}
+</div>

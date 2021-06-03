@@ -1,0 +1,60 @@
+﻿@model MVCSchool.Models.Trainer
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm("DbEdit", "Trainer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="my-form row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card">
+
+                <div class="card-header">
+                    <h6 class="text-center">Register Trainer</h6>
+                </div>
+                
+                @Html.HiddenFor(t=>t.TrainerId)
+                
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(t => t.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(t => t.FirstName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(t => t.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(t => t.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(t => t.LastName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(t => t.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(t => t.Subject, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(t => t.Subject, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(t => t.Subject, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 offset-md-3">
+                        <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset" />
+                        <input type="submit" class="btn btn-success btn-block" value="Save Changes" />
+                    </div>
+                </div>
+            </div>
+            @Html.ActionLink("Return", "Trainer", null, new { @class = "btn btn-outline-info btn-sm" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

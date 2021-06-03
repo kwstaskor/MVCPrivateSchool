@@ -1,0 +1,50 @@
+﻿@using MVCSchool.Models
+@model MVCSchool.Models.Course
+
+@{ ViewBag.Title = "Details"; }
+
+<div class="container-fluid mt-5">
+    <h2>Info</h2>
+
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(c=>c.Title)</strong> @Model.Title</li>
+        <li><strong>@Html.DisplayNameFor(c => c.Stream)</strong> @Model.Stream</li>
+        <li><strong>@Html.DisplayNameFor(c => c.Type)</strong> @Model.Type</li>
+        <li><strong>@Html.DisplayNameFor(c => c.StartDate)</strong> @Model.StartDate.ToString("yyyy MMMM dd")</li>
+        <li><strong>@Html.DisplayNameFor(c => c.EndDate)</strong> @Model.EndDate.ToString("yyyy MMMM dd")</li>
+    </ul>
+    @if (Model.Students.Count > 0)
+    {
+        <h5>Students For @Model.Title</h5>
+        <ul>
+            @foreach (var student in Model.Students)
+            {
+                <li>@student.FirstName @student.LastName</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Trainers.Count > 0)
+    {
+        <h5>Trainers For @Model.Title</h5>
+        <ul>
+            @foreach (var trainer in Model.Trainers)
+            {
+                <li>@trainer.FirstName @trainer.LastName</li>
+            }
+        </ul>
+    }
+    
+    @if (Model.Assignments.Count > 0)
+    {
+        <h5>Assignments For @Model.Title</h5>
+        <ul>
+            @foreach (var assignment in Model.Assignments)
+            {
+                <li>@assignment.Title @assignment.Description</li>
+            }
+        </ul>
+    }
+
+    @Html.ActionLink("Return", "Course", null, new { @class = "btn btn-outline-info btn-sm" })
+</div>

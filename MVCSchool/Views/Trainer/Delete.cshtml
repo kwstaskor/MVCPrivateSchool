@@ -1,0 +1,23 @@
+﻿@model MVCSchool.Models.Trainer
+
+@{ ViewBag.Title = "Delete"; }
+
+<div class="container-fluid mt-5">
+    <h5>Are you sure you want to delete this Trainer?</h5>
+    <p>Deleting this trainer,also deletes all associations.</p>
+    <hr class="my-4" />
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(t => t.FirstName)</strong> @Model.FirstName</li>
+        <li><strong>@Html.DisplayNameFor(t => t.LastName)</strong> @Model.LastName</li>
+        <li><strong>@Html.DisplayNameFor(t => t.Subject)</strong> @Model.Subject</li>
+    </ul>
+    @using (Html.BeginForm("Delete","Trainer",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <form class="form-group m-4 form-actions">
+            @Html.ActionLink("Return", "Trainer", null, new { @class = "btn btn-outline-info btn-sm" })
+
+            <input type="submit" value="Delete" class="btn btn-danger m-1" />
+        </form>
+    }
+</div>

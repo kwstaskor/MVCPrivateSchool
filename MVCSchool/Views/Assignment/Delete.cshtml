@@ -1,0 +1,25 @@
+﻿@model MVCSchool.Models.Assignment
+
+@{ ViewBag.Title = "Delete"; }
+
+<div class="container-fluid mt-5">
+    <h5>Are you sure you want to delete this Assignment?</h5>
+    <p>Deleting this assignment,also deletes all associations.</p>
+    <hr class="my-4" />
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(a => a.Title)</strong> @Model.Title</li>
+        <li><strong>@Html.DisplayNameFor(a => a.Description)</strong> @Model.Description</li>
+        <li><strong>@Html.DisplayNameFor(a => a.Submission)</strong> @Model.Submission</li>
+        <li><strong>@Html.DisplayNameFor(a => a.OralMark)</strong> @Model.OralMark</li>
+        <li><strong>@Html.DisplayNameFor(a => a.TotalMark)</strong> @Model.TotalMark</li>
+    </ul>
+    @using (Html.BeginForm("Delete" , "Assignment" ,FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(a=>a.AssignmentId)
+      
+        @Html.ActionLink("Return", "Assignment", null, new { @class = "btn btn-outline-info btn-sm" })
+
+        <input type="submit" value="Delete" class="btn btn-danger m-1" />
+    }
+</div>

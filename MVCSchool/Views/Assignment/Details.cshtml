@@ -1,0 +1,59 @@
+﻿@model MVCSchool.Models.Assignment
+
+
+<div class="container-fluid  mt-5">
+    <h2>Info</h2>
+
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(a => a.Title)</strong> @Model.Title</li>
+        <li><strong>@Html.DisplayNameFor(a => a.Description)</strong> @Model.Description</li>
+        <li><strong>@Html.DisplayNameFor(a => a.OralMark)</strong> @Model.OralMark</li>
+        <li><strong>@Html.DisplayNameFor(a => a.TotalMark)</strong> @Model.TotalMark</li>
+        <li><strong>@Html.DisplayNameFor(a => a.Submission)</strong> @Model.Submission</li>
+    </ul>
+
+    @if (Model.Courses.Count > 0)
+    {
+        <h5>Courses for @Model.Title</h5>
+        <ul>
+            @foreach (var course in Model.Courses)
+            {
+                <li>@course.Title @course.Stream</li>
+            }
+        </ul>
+    }
+
+    @if (Model.Students.Count > 0)
+    {
+        <h5>Students for @Model.Title</h5>
+        <ul>
+            @foreach (var student in Model.Students)
+            {
+                <li>@student.FirstName @student.LastName</li>
+            }
+        </ul>
+    }
+
+    @Html.ActionLink("Return", "Assignment", "", new { @class = "btn btn-outline-info btn-sm" })
+
+    <button id="addCourse" class="btn btn-sm btn-primary">Add Course</button>
+
+    <form id="myForm">
+        <div class="form-group row">
+            <label for="SelectCourse" class="col-md-4 col-form-label select-label text-md-right">Choose Course</label>
+            <select id="SelectCourse" class="selectpicker form-control col-md-6" data-style="bg-white rounded-pill" multiple name="courses">
+                <option></option>
+                <option>blalba</option>
+                <option>blalba</option>
+                <option>blalba</option>
+                <option>blalba</option>
+            </select>
+        </div>
+    </form>
+</div>
+
+
+@section scripts
+{
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+}

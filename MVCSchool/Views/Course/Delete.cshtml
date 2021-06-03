@@ -1,0 +1,26 @@
+﻿@model MVCSchool.Models.Course
+
+@{ ViewBag.Title = "Delete"; }
+
+<div class="container-fluid mt-5">
+    <h5>Are you sure you want to delete this Course?</h5>
+    <p>Deleting this course,also deletes all associations.</p>
+    <hr class="my-4" />
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(c => c.Title)</strong> @Model.Title</li>
+        <li><strong>@Html.DisplayNameFor(c => c.Stream)</strong> @Model.Stream</li>
+        <li><strong>@Html.DisplayNameFor(c => c.Type)</strong> @Model.Type</li>
+        <li><strong>@Html.DisplayNameFor(c => c.StartDate)</strong> @Model.StartDate.ToString("yyyy MMMM dd")</li>
+        <li><strong>@Html.DisplayNameFor(c => c.EndDate)</strong> @Model.EndDate.ToString("yyyy MMMM dd")</li>
+    </ul>
+    @using (Html.BeginForm("Delete" , "Course" ,FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(c=>c.CourseId)
+      
+            @Html.ActionLink("Return", "Course", null, new { @class = "btn btn-outline-info btn-sm" })
+
+            <input type="submit" value="Delete" class="btn btn-danger m-1" />
+        
+    }
+</div>

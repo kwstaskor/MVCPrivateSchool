@@ -1,0 +1,68 @@
+﻿@model MVCSchool.Models.Student
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm("DbEdit", "Student", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="my-form row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card">
+
+                <div class="card-header">
+                    <h6 class="text-center">Edit Student</h6>
+                </div>
+
+                @Html.HiddenFor(s => s.StudentId)
+
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(s => s.FirstName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(s => s.LastName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <br />
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(s => s.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.TuitionFee, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.EditorFor(s => s.TuitionFee, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.TuitionFee, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 offset-md-3">
+                        <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset" />
+                        <input type="submit" class="btn btn-success btn-block" value="Save Changes" />
+                    </div>
+                </div>
+            </div>
+            @Html.ActionLink("Return", "Student", null, new { @class = "btn btn-outline-info btn-sm" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

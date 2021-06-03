@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<hr class="my-4" />
+<!--Two Column Section-->
+<div class="row padding">
+    <hr class="my-4 padding" />
+    <div class="col-lg-6">
+        <h2>Our Philosophy</h2>
+        <p>
+            In our classrooms, students learn entirely through creating projects. Projects allow students to work on their
+            critical thinking and problem solving skills while simultaneously picking up the hard skills of coding.
+        </p>
+        <p>
+            Students create games in Scratch, progress to websites in HTML, CSS, and Javascript, as well as work in many other tools and
+            languages depending on what keeps them both engaged and challenged. They create projects not by using tutorials, but rather by
+            learning to think critically and create their own solutions to problems.
+            In addition to students being able to construct their own knowledge, project based curriculum also allows students to work at their own pace.
+            It is the job of our teachers to make sure that students find projects that are both engaging and challenging at the same time.
+        </p>
+        <br />
+        @Html.ActionLink("Check our assignments","Assignment" , "Assignment" , "",new{@class = "btn btn-primary"})
+    </div>
+    <div class="col-lg-6">
+        <img src="~/Content/img/philosophy.jpg" class="img-fluid" alt="Alternate Text" />
+    </div>
+</div>
+<hr class="my-4" />

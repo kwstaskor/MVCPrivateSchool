@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Code Academy</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @*navbar*@
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbaresponsive">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @Html.ActionLink("Code Academy", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="navbar-collapse collapse" id="navbaresponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">@Html.ActionLink("Courses", "Course", "Course")</li>
+                    <li class="nav-item">@Html.ActionLink("Trainers", "Trainer", "Trainer")</li>
+                    <li class="nav-item">@Html.ActionLink("Students", "Student", "Student")</li>
+                    <li class="nav-item">@Html.ActionLink("Assignments", "Assignment", "Assignment")</li>
+                }
+                <li class="nav-item">@Html.ActionLink("About", "About", "Home")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </nav>
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    @*Fixed Background*@
+    <figure>
+        <div class="fixed-wrap">
+
+            <div id="fixed"></div>
+        </div>
+    </figure>
+    <div class="container-fluid">
+        <!--Connect-->
+        <div class="row text-center padding">
+            <div class="col-12">
+                <h2>Connect</h2>
+            </div>
+            <div class="col-12 social padding">
+                <a href="https://www.instagram.com/" target="_blank" data-toggle="tooltip" data-placement="left" title="Our Instagram">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com/" data-toggle="tooltip" data-placement="left" title="Our Twitter" target="_blank">
+                    <i class="fa fa-twitter-square"></i>
+                </a>
+                <a href="https://www.facebook.com/" data-toggle="tooltip" data-placement="left" title="Our Facebook" target="_blank">
+                    <i class="fa fa-facebook-square"></i>
+                </a>
+                <a href="https://www.youtube.com/" data-toggle="tooltip" data-placement="left" title="Our Youtube" target="_blank">
+                    <i class="fa fa-youtube-square"></i>
+                </a>
+            </div>
+            <hr class="my-4" />
+        </div>
+
+        <footer class="bg-dark">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <img src="~/Content/img/footerlogo.jpg" alt="Alternate Text" />
+                    <hr class="light" />
+                    <p>210-00-00000</p>
+                    <p>coding@school.com</p>
+                    <p>31 Pouthena, Gonia</p>
+                    <p>Athens , Greece 104 31</p>
+                </div>
+                <div class="col-md-4">
+                    <hr class="light" />
+                    <h5>Our Hours</h5>
+                    <hr class="light" />
+                    <p>Monday - Friday: 9am - 5pm</p>
+                    <p>Saturday: 10am - 2pm</p>
+                    <p>Sunday: Closed</p>
+                </div>
+                <div class="col-md-4">
+                    <hr class="light" />
+                    <h5>Service Area</h5>
+                    <hr class="light" />
+                    <p>Patra, Achaia, 262 21</p>
+                    <p>Hraklio, Kriti, 71 201</p>
+                    <p>Thesaloniki, Thesaloniki, 542 48</p>
+                    <p>Ioanina, Ipiros, 452 21</p>
+                </div>
+                <div class="col-12">
+                    <hr class="light-100" />
+                    <h5>&copy; @DateTime.Now.Year Coding-school.com</h5>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/popper")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

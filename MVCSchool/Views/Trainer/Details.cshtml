@@ -1,0 +1,24 @@
+﻿@model MVCSchool.Models.Trainer
+
+
+<div class="container-fluid mt-5">
+    <h2>Info</h2>
+
+    <ul class="list-unstyled">
+        <li><strong>@Html.DisplayNameFor(t=>t.FirstName)</strong> @Model.FirstName</li>
+        <li><strong>@Html.DisplayNameFor(t => t.LastName)</strong> @Model.LastName</li>
+        <li><strong>@Html.DisplayNameFor(t => t.Subject)</strong> @Model.Subject</li>
+    </ul>
+
+    @if (Model.Courses.Count > 0)
+    {
+        <h5>Courses For @Model.FirstName</h5>
+        <ul>
+            @foreach (var course in Model.Courses)
+            {
+                <li>@course.Title @course.Type</li>
+            }
+        </ul>
+    }
+    @Html.ActionLink("Return", "Trainer", null, new { @class = "btn btn-outline-info btn-sm" })
+</div>
