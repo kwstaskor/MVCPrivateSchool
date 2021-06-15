@@ -29,6 +29,7 @@ namespace MVCSchool.Models
         public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Tuition Fee")]
+        [DataType(DataType.Currency)]
         public decimal TuitionFee { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }

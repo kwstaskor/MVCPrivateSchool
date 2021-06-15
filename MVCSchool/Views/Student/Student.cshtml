@@ -25,7 +25,7 @@
                     <td>@student.FirstName</td>
                     <td>@student.LastName</td>
                     <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
-                    <td>@student.TuitionFee€</td>
+                    <td>@student.TuitionFee &euro;</td>
                     <td>
                         @Html.ActionLink("Info", "Details", new { id = student.StudentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
                         @Html.ActionLink("Edit", "Edit", new { id = student.StudentId }, new { @class = "btn btn-sm btn-success m-1" })

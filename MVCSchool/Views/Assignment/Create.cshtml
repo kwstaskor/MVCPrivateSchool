@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Title, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(a => a.Title, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(a => a.Title, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(a => a.Title, "", new { @class = "text-danger" })
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Description, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(a => a.Description, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(a => a.Description, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(a => a.Description, "", new { @class = "text-danger" })
@@ -32,15 +32,15 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Submission, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(a => a.Submission, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.Submission, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" , type="datetime-local"} })
-                            @Html.ValidationMessageFor(a => a.Submission, "", new { @class = "text-danger"})
+                            @Html.EditorFor(a => a.Submission, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "datetime-local", min = DateTime.Now.Year - 1 } })
+                            @Html.ValidationMessageFor(a => a.Submission, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.OralMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(a => a.OralMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(a => a.OralMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(a => a.OralMark, "", new { @class = "text-danger" })
@@ -48,10 +48,19 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.TotalMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(a => a.TotalMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(a => a.TotalMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(a => a.TotalMark, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <button id="crsBtn" type="button" class="btn btn-sm btn-primary m-2">Add Course</button>
+
+                    <div id="addCrs" class="form-group mb-5">
+                        @Html.LabelFor(a => a.Courses, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("courseList", ViewBag.courseList as MultiSelectList, new { @class = "selectpicker form-control" })
                         </div>
                     </div>
 
@@ -61,11 +70,25 @@
                     </div>
                 </div>
             </div>
-            @Html.ActionLink("Return", "Assignment", null, new { @class = "btn btn-outline-info btn-sm" })
+            @Html.ActionLink("Return", "Index","Admin" ,null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+
+    <script>
+
+        $("#addCrs").hide();
+        $("#crsBtn").click(function () {
+
+            $("#addCrs").slideToggle(800);
+            $(this).text($(this).text() == 'Add Course' ? 'Close' : 'Add Course');
+            $(this).toggleClass("btn-danger");
+
+        });
+
+    </script>
 }

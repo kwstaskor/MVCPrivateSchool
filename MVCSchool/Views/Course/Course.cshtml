@@ -9,15 +9,15 @@
 <div class="container-fluid">
     <h2 class="m-4 text-center">Courses</h2>
 
-    <div class="container-sm pull-left mt-1 mb-1">
+    <div class="container pull-left mt-1 mb-1">
         <div class="input-group rounded">
-            @using (@Html.BeginForm("Course", "Course", FormMethod.Get))
+            @using (@Html.BeginForm("Course", "Course", FormMethod.Get , new {@class = "form-inline"}))
             {
-                @Html.TextBox("searchByName", null, new { @class = "form-control", placeholder = "Search", type = "search", autocomplete = "off" })
+                @Html.TextBox("searchByName", null, new { @class = "form-control", placeholder = "Search", type = "search" })
                 <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
 
-                <input class="form-control btn btn-sm btn-outline-success mt-1 mb-1" type="submit" value="Search" />
-                <input id="resetButton" class="form-control btn btn-sm btn-outline-secondary  mt-1 mb-1" type="button" value="Reset" />
+                <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                <input id="resetButton" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
             }
         </div>
     </div>
@@ -63,7 +63,7 @@
             </tbody>
         </table>
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, p => @Url.Action("Course", "Course", new { pNumber = p }) , PagedListRenderOptions.ClassicPlusFirstAndLast)
+        @Html.PagedListPager(Model, p => @Url.Action("Course", "Course", new { pNumber = p }) , PagedListRenderOptions.TwitterBootstrapPager)
         @Html.ActionLink("Add Course", "Create", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
     </div>

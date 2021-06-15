@@ -1,0 +1,281 @@
+﻿@using PagedList.Mvc
+@model MVCSchool.Models.ViewModels.AdminViewModel
+
+
+<div class="row">
+    @*Courses*@
+    <div class="col-md-6">
+        <h2 class="m-4 text-center">Courses</h2>
+
+        <div class="container pull-left mt-1 mb-1">
+            <div class="input-group rounded">
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
+                {
+                    @Html.TextBox("searchByNameC", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
+
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                    <input id="resetButtonC" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
+                }
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light table-striped text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            @Html.ActionLink("Title", "Index", "Admin", new { sortOrder = ViewBag.TitleCSort, searchByNameC = ViewBag.CurrentNameC }, new { style = "text-decoration:none" })
+
+                        </th>
+                        <th>
+                            @Html.ActionLink("Stream", "Index", "Admin", new { sortOrder = ViewBag.StreamSort, searchByNameC = ViewBag.CurrentNameC }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Type", "Index", "Admin", new { sortOrder = ViewBag.TypeSort, searchByNameC = ViewBag.CurrentNameC }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Start Date", "Index", "Admin", new { sortOrder = ViewBag.SdSort, searchByNameC = ViewBag.CurrentNameC }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("End Date", "Index", "Admin", new { sortOrder = ViewBag.EdSort, searchByNameC = ViewBag.CurrentNameC }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in Model.Courses)
+                    {
+                        <tr id="@course.CourseId">
+                            <td>@course.Title</td>
+                            <td>@course.Stream</td>
+                            <td>@course.Type</td>
+                            <td>@course.StartDate.ToString("yyyy MMMM dd")</td>
+                            <td>@course.EndDate.ToString("yyyy MMMM dd")</td>
+                            <td>
+                                @Html.ActionLink("Info", "Details", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                                @Html.ActionLink("Edit", "Edit", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-success m-1" })
+                                @Html.ActionLink("Delete", "Delete", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-danger m-1" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*Page @(Model.Courses.PageCount < Model.Courses.PageNumber ? 0 : Model.Courses.PageNumber) of @Model.Courses.PageCount*@
+            @*@Html.PagedListPager(Model.Courses, p => @Url.Action("Course", "Course", new { pNumber = p }), PagedListRenderOptions.TwitterBootstrapPager)*@
+            @Html.ActionLink("Add Course", "Create", "Course", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+            @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
+        </div>
+    </div>
+
+    @*Assignments*@
+    <div class="col-md-6">
+        <h2 class="m-4 text-center">Assignments</h2>
+
+        <div class="container pull-left mt-1 mb-1">
+            <div class="input-group rounded">
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
+                {
+                    @Html.TextBox("searchByNameA", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
+
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                    <input id="resetButtonA" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
+                }
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light table-striped text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            @Html.ActionLink("Title", "Index", "Admin", new { sortOrder = ViewBag.TitleASort, searchByNameA = ViewBag.CurrentNameA }, new { style = "text-decoration:none" })
+
+                        </th>
+                        <th>
+                            @Html.ActionLink("Description", "Index", "Admin", new { sortOrder = ViewBag.DescriptionSort, searchByNameA = ViewBag.CurrentNameA }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Submission Date", "Index", "Admin", new { sortOrder = ViewBag.SubmissionSort, searchByNameA = ViewBag.CurrentNameA }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Oral Mark", "Index", "Admin", new { sortOrder = ViewBag.OralSort, searchByNameA = ViewBag.CurrentNameA }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Total Mark", "Index", "Admin", new { sortOrder = ViewBag.TotalSort, searchByNameA = ViewBag.CurrentNameA }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assignment in Model.Assignments)
+                    {
+                        <tr id="@assignment.AssignmentId">
+                            <td>@assignment.Title</td>
+                            <td>@assignment.Description</td>
+                            <td>@assignment.Submission</td>
+                            <td>@assignment.OralMark</td>
+                            <td>@assignment.TotalMark</td>
+                            <td>
+                                @Html.ActionLink("Info", "Details", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                                @Html.ActionLink("Edit", "Edit", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-success m-1" })
+                                @Html.ActionLink("Delete", "Delete", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-danger m-1" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.ActionLink("Add Assignment", "Create", "Assignment", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+            @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4" />
+
+<div class="row">
+    @*Students*@
+    <div class="col-md-6">
+        <h2 class="m-4 text-center">Students</h2>
+
+        <div class="container pull-left mt-1 mb-1">
+            <div class="input-group rounded">
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new {@class = "form-inline"}))
+                {
+                    @Html.TextBox("searchByNameS", null, new {@class = "form-control", placeholder = "Search", type = "search"})
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder"/>
+
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search"/>
+                    <input id="resetButtonS" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset"/>
+                }
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light table-striped text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.ActionLink("First Name", "Index", "Admin", new {sortOrder = ViewBag.FirstNameSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Last Name", "Index", "Admin", new {sortOrder = ViewBag.LastNameSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Date of Birth", "Index", "Admin", new {sortOrder = ViewBag.DoBSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Tuition Fee", "Index", "Admin", new {sortOrder = ViewBag.FeeSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var student in Model.Students)
+                {
+                    <tr id="@student.StudentId">
+                        <td>@student.FirstName</td>
+                        <td>@student.LastName</td>
+                        <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
+                        <td>@student.TuitionFee &euro;</td>
+                        <td>
+                            @Html.ActionLink("Info", "Details", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-outline-info m-1"})
+                            @Html.ActionLink("Edit", "Edit", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-success m-1"})
+                            @Html.ActionLink("Delete", "Delete", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-danger m-1"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @Html.ActionLink("Add Student", "Create", "Student", null, new {@class = "btn btn-sm btn-primary m-1 pull-right"})
+            @Html.ActionLink("Return", "Index", "Home", null, new {@class = "btn btn-outline-info btn-sm"})
+        </div>
+    </div>
+
+    @*Trainers*@
+    <div class="col-md-6">
+        <h2 class="m-4 text-center">Trainers</h2>
+
+        <div class="container pull-left mt-1 mb-1">
+            <div class="input-group rounded">
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new {@class = "form-inline"}))
+                {
+                    @Html.TextBox("searchByNameT", null, new {@class = "form-control", placeholder = "Search", type = "search"})
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder"/>
+
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search"/>
+                    <input id="resetButtonT" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset"/>
+                }
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light table-striped text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.ActionLink("First Name", "Index", "Admin", new {sortOrder = ViewBag.FirstNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Last Name", "Index", "Admin", new {sortOrder = ViewBag.LastNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Subject", "Index", "Admin", new {sortOrder = ViewBag.SubjectSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var trainer in Model.Trainers)
+                {
+                    <tr id="@trainer.TrainerId">
+                        <td>@trainer.FirstName</td>
+                        <td>@trainer.LastName</td>
+                        <td>@trainer.Subject</td>
+                        <td>
+                            @Html.ActionLink("Info", "Details", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-outline-info m-1"})
+                            @Html.ActionLink("Edit", "Edit", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-success m-1"})
+                            @Html.ActionLink("Delete", "Delete", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-danger m-1"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @Html.ActionLink("Add Trainer", "Create", "Trainer", null, new {@class = "btn btn-sm btn-primary m-1 pull-right"})
+            @Html.ActionLink("Return", "Index", "Home", null, new {@class = "btn btn-outline-info btn-sm"})
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+
+        $("#resetButtonC").click(function(e) {
+
+                $("#searchByNameC").val("");
+            }
+        );
+
+        $("#resetButtonA").click(function(e) {
+
+                $("#searchByNameA").val("");
+            }
+        );
+
+        $("#resetButtonS").click(function(e) {
+
+                $("#searchByNameS").val("");
+            }
+        );
+        $("#resetButtonT").click(function(e) {
+
+                $("#searchByNameT").val("");
+            }
+        );
+
+    </script>
+}

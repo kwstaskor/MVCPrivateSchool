@@ -31,6 +31,7 @@ namespace MVCSchool.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ending Date")]
+        [CourseDatesVal]
         public DateTime EndDate { get; set; }
 
         public virtual ICollection<Assignment> Assignments { get; set; }

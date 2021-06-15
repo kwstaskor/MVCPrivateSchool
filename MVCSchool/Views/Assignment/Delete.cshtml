@@ -18,7 +18,7 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(a=>a.AssignmentId)
       
-        @Html.ActionLink("Return", "Assignment", null, new { @class = "btn btn-outline-info btn-sm" })
+        @Html.ActionLink("Return", "Index","Admin" ,null, new { @class = "btn btn-outline-info btn-sm" })
 
         <input type="submit" value="Delete" class="btn btn-danger m-1" />
     }

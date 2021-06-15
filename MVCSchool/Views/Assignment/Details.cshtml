@@ -34,26 +34,7 @@
         </ul>
     }
 
-    @Html.ActionLink("Return", "Assignment", "", new { @class = "btn btn-outline-info btn-sm" })
 
-    <button id="addCourse" class="btn btn-sm btn-primary">Add Course</button>
-
-    <form id="myForm">
-        <div class="form-group row">
-            <label for="SelectCourse" class="col-md-4 col-form-label select-label text-md-right">Choose Course</label>
-            <select id="SelectCourse" class="selectpicker form-control col-md-6" data-style="bg-white rounded-pill" multiple name="courses">
-                <option></option>
-                <option>blalba</option>
-                <option>blalba</option>
-                <option>blalba</option>
-                <option>blalba</option>
-            </select>
-        </div>
-    </form>
+    @Html.ActionLink("Return", "Index", "Admin",null, new { @class = "btn btn-outline-info btn-sm" })
 </div>
 
-
-@section scripts
-{
-    <script src="~/Scripts/bootstrap-select.min.js"></script>
-}

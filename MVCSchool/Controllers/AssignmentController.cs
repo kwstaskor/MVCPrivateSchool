@@ -56,25 +56,36 @@ namespace MVCSchool.Controllers
             unitOfWork.Assignments.Remove(assignment);
             unitOfWork.Save();
 
-            return RedirectToAction("Assignment");
+            return RedirectToAction("Index", "Admin");
         }
 
         [HttpGet]
         public ActionResult Create()
         {
+            var courses = unitOfWork.Courses.Get();
+            var selectList = new MultiSelectList(courses, "CourseId", "Title");
+            ViewBag.courseList = selectList;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbCreate([Bind(Include = "AssignmentId,Title,Description,Submission,OralMark,TotalMark")] Assignment assignment)
+        public ActionResult DbCreate([Bind(Include = "AssignmentId,Title,Description,Submission,OralMark,TotalMark")] Assignment assignment, int[] courseList)
         {
+            if (!(courseList is null))
+            {
+                foreach (var id in courseList)
+                {
+                    var course = unitOfWork.Courses.FindById(id);
+                    assignment.Courses.Add(course);
+                }
+            }
 
             if (!ModelState.IsValid) return RedirectToAction("Create", assignment);
 
             unitOfWork.Assignments.Add(assignment);
             unitOfWork.Save();
-            return RedirectToAction("Assignment");
+            return RedirectToAction("Index", "Admin");
         }
         [HttpGet]
         public ActionResult Edit(int? id)
@@ -90,14 +101,25 @@ namespace MVCSchool.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbEdit([Bind(Include = "AssignmentId,Title,Description,Submission,OralMark,TotalMark")] Assignment assignment)
+        public ActionResult DbEdit([Bind(Include = "AssignmentId,Title,Description,Submission,OralMark,TotalMark")] Assignment assignment , int[] courses)
         {
+            if (courses != null)
+            {
+                assignment.Courses.Clear();
+                foreach (var id in courses)
+                {
+                    var course = unitOfWork.Courses.FindById(id);
+                    assignment.Courses.Add(course);
+                }
+            }
+           
+
             if (!ModelState.IsValid) return RedirectToAction("Edit", assignment);
 
             unitOfWork.Assignments.Edit(assignment);
             unitOfWork.Save();
 
-            return RedirectToAction("Assignment");
+            return RedirectToAction("Index", "Admin");
         }
 
 

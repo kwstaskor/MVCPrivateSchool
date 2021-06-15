@@ -109,7 +109,7 @@ namespace MVCSchool.Controllers
             unitOfWork.Courses.Remove(course);
             unitOfWork.Save();
 
-            return RedirectToAction("Course");
+            return RedirectToAction("Index" , "Admin");
         }
 
         [HttpGet]
@@ -127,7 +127,7 @@ namespace MVCSchool.Controllers
            
             unitOfWork.Courses.Add(course);
             unitOfWork.Save();
-            return RedirectToAction("Course");
+            return RedirectToAction("Index" , "Admin");
         }
 
         [HttpGet]
@@ -151,7 +151,7 @@ namespace MVCSchool.Controllers
             unitOfWork.Courses.Edit(course);
             unitOfWork.Save();
 
-            return RedirectToAction("Course");
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)

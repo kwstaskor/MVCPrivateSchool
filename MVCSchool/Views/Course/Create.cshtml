@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Title, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}})
+                        @Html.LabelFor(c => c.Title, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(c => c.Title, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"}})
                             @Html.ValidationMessageFor(c=>c.Title , "" , new {@class="text-danger" })
@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Stream, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}})
+                        @Html.LabelFor(c => c.Stream, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(c => c.Stream, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"} })
                             @Html.ValidationMessageFor(c=>c.Stream,"",new {@class="text-danger"})
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Type, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}})
+                        @Html.LabelFor(c => c.Type, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(c => c.Type, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"}})
                             @Html.ValidationMessageFor(c=>c.Type,"",new {@class="text-danger"})
@@ -39,15 +39,15 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.StartDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}})
+                        @Html.LabelFor(c => c.StartDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(c => c.StartDate, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(c=>c.StartDate , "", new {@class="text-danger"})
+                            @Html.EditorFor(c => c.StartDate, new { htmlAttributes = new { @class = "form-control", min = DateTime.Now.Year - 1 } })
+                            @Html.ValidationMessageFor(c => c.StartDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.EndDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}})
+                        @Html.LabelFor(c => c.EndDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(c => c.EndDate, new {htmlAttributes = new {@class = "form-control"}})
                             @Html.ValidationMessageFor(c=>c.EndDate,"",new {@class="text-danger" })
@@ -60,11 +60,25 @@
                     </div>
                 </div>
             </div>
-            @Html.ActionLink("Return", "Course", null, new { @class = "btn btn-outline-info btn-sm" })
+            @Html.ActionLink("Return", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    
+    <script>
+        jQuery.validator.addMethod("datemustbeequalorgreaterthanstartdate", function (value, element, param) {
+            var endDate = $("#EndDate").val();
+            var startDate = $("#StartDate").val();
+
+            if (endDate < startDate) {
+                return false;
+            }
+            return true;
+        });
+
+        jQuery.validator.unobtrusive.adapters.addBool("datemustbeequalorgreaterthanstartdate");
+    </script>
 }

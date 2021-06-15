@@ -191,6 +191,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AssignmentController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Validations\AssignmentValidate.cs" />
+    <Compile Include="Models\Validations\CourseDatesVal.cs" />
     <Compile Include="Models\Validations\CourseValidate.cs" />
     <Compile Include="Models\Validations\StudentValidate.cs" />
     <Compile Include="Models\Validations\TrainerValidate.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Trainer.cs" />
+    <Compile Include="Models\ViewModels\AdminViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\Repositories\AssignmentsRepos.cs" />
     <Compile Include="UnitOfWork\Repositories\IRepository.cs" />
@@ -568,10 +571,11 @@
     <Content Include="Views\Assignment\Delete.cshtml" />
     <Content Include="Views\Assignment\Create.cshtml" />
     <Content Include="Views\Assignment\Edit.cshtml" />
-    <Content Include="Views\Course\CourseReadOnly.cshtml" />
     <Content Include="Views\Assignment\AssignmentReadOnly.cshtml" />
     <Content Include="Views\Student\StudentReadOnly.cshtml" />
     <Content Include="Views\Trainer\TrainerReadOnly.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Course\CourseReadOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

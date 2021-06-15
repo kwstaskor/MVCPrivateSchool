@@ -1,4 +1,5 @@
-﻿@model MVCSchool.Models.Trainer
+﻿@using System.Collections.Generic
+@model MVCSchool.Models.Trainer
 
 @{
     ViewBag.Title = "Edit";
@@ -15,12 +16,12 @@
                 <div class="card-header">
                     <h6 class="text-center">Register Trainer</h6>
                 </div>
-                
-                @Html.HiddenFor(t=>t.TrainerId)
-                
+
+                @Html.HiddenFor(t => t.TrainerId)
+
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(t => t.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(t => t.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(t => t.FirstName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(t => t.FirstName, "", new { @class = "text-danger" })
@@ -28,7 +29,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(t => t.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(t => t.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(t => t.LastName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(t => t.LastName, "", new { @class = "text-danger" })
@@ -36,13 +37,30 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(t => t.Subject, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        @Html.LabelFor(t => t.Subject, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(t => t.Subject, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                             @Html.ValidationMessageFor(t => t.Subject, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    
+                    
+                    <label class="h6">Selected Courses</label>
+                    <ul class="list-unstyled">
+                        @foreach (var course in Model.Courses)
+                        {
+                            <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
+                        }
+                    </ul>
+                    
+                    <button id="crsBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Courses</button>
 
+                    <div id="editCrs" class="form-group mb-5">
+                        @Html.LabelFor(t => t.Courses, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("CourseEdit",(MultiSelectList)ViewBag.CourseEdit, new {@class = "selectpicker form-control ", multiple= "multiple" })
+                        </div>
+                    </div>
 
                     <div class="col-md-6 offset-md-3">
                         <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset" />
@@ -50,11 +68,24 @@
                     </div>
                 </div>
             </div>
-            @Html.ActionLink("Return", "Trainer", null, new { @class = "btn btn-outline-info btn-sm" })
+            @Html.ActionLink("Return", "Index", "Admin", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script>
+
+        $("#editCrs").hide();
+        $("#crsBtn").click(function () {
+
+            $("#editCrs").slideToggle(800);
+            $(this).text($(this).text() == 'Edit Courses' ? 'Close' : 'Edit Courses');
+            $(this).toggleClass("btn-danger");
+
+        });
+
+    </script>
 }

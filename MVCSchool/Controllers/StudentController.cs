@@ -52,25 +52,37 @@ namespace MVCSchool.Controllers
             unitOfWork.Students.Remove(student);
             unitOfWork.Save();
 
-            return RedirectToAction("Student");
+            return RedirectToAction("Index" , "Admin");
         }
 
         [HttpGet]
         public ActionResult Create()
         {
+            var courses = unitOfWork.Courses.Get();
+            var selectList = new MultiSelectList(courses, "CourseId", "Title");
+            ViewBag.courseList = selectList;
             return View();
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbCreate([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student)
+        public ActionResult DbCreate([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student,int[] courseList)
         {
+            if (!(courseList is null))
+            {
+                foreach (var id in courseList)
+                {
+                    var course = unitOfWork.Courses.FindById(id);
+                    student.Courses.Add(course);
+                }
+            }
+
             if (!ModelState.IsValid) return RedirectToAction("Create", student);
 
             unitOfWork.Students.Add(student);
             unitOfWork.Save();
-            return RedirectToAction("Student");
+            return RedirectToAction("Index", "Admin");
         }
 
         [HttpGet]
@@ -94,7 +106,7 @@ namespace MVCSchool.Controllers
             unitOfWork.Students.Edit(student);
             unitOfWork.Save();
 
-            return RedirectToAction("Student");
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)
