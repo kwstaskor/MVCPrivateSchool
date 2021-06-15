@@ -10,9 +10,6 @@ namespace MVCSchool.UnitOfWork.Repositories
 {
     public class TrainersRepos : Repository<Trainer>
     {
-        public string name
-        {
-            get { return this.name;} set{} }
         public ApplicationDbContext ApplicationDbContext { get { return Context as ApplicationDbContext; }
             set { }
         }

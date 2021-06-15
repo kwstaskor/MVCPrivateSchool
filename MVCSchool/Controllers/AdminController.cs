@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
 using MVCSchool.Models.ViewModels;
 using MVCSchool.UnitOfWork;
-using PagedList;
 
 namespace MVCSchool.Controllers
 {
@@ -30,13 +28,9 @@ namespace MVCSchool.Controllers
                 Assignments = unitOfWork.Assignments.Get()
             };
 
-
             FilteringViewModel(searchByNameA, searchByNameC, searchByNameS,searchByNameT, viewModel);
 
             SortingViewModel(sortOrder, viewModel);
-
-
-            Pagination(pSize, pNumber, viewModel);
 
             if (User.IsInRole("Admin"))
             {
@@ -211,17 +205,6 @@ namespace MVCSchool.Controllers
             }
 
             return trainers;
-        }
-
-        private static void Pagination(int? pSize, int? pNumber, AdminViewModel viewModel)
-        {
-            var pageSize = pSize ?? 5;
-            var pageNumber = pNumber ?? 1;
-
-            viewModel.Students.ToPagedList(pageNumber, pageSize);
-            viewModel.Trainers.ToPagedList(pageNumber, pageSize);
-            viewModel.Courses.ToPagedList(pageNumber, pageSize);
-            viewModel.Assignments.ToPagedList(pageNumber, pageSize);
         }
 
         protected override void Dispose(bool disposing)

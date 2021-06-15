@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
 using MVCSchool.UnitOfWork;
-using MVCSchool.UnitOfWork.Repositories;
 
 namespace MVCSchool.Controllers
 {
@@ -73,6 +70,8 @@ namespace MVCSchool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DbCreate([Bind(Include = "TrainerId , FirstName , LastName , Subject")] Trainer trainer, int[] courseList)
         {
+            if (!ModelState.IsValid) return RedirectToAction("Create", trainer);
+
             if (!(courseList is null))
             {
                 foreach (var id in courseList)
@@ -81,9 +80,6 @@ namespace MVCSchool.Controllers
                     trainer.Courses.Add(course);
                 }
             }
-
-            if (!ModelState.IsValid) return RedirectToAction("Create", trainer);
-
             unitOfWork.Trainers.Add(trainer);
             unitOfWork.Save();
 
