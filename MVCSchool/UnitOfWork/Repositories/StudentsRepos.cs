@@ -8,7 +8,7 @@ namespace MVCSchool.UnitOfWork.Repositories
 {
     public class StudentsRepos : Repository<Student>
     {
-        public ApplicationDbContext ApplicationDbContext
+        public ApplicationDbContext DbContext
         {
             get { return Context as ApplicationDbContext; }
         }
@@ -17,5 +17,63 @@ namespace MVCSchool.UnitOfWork.Repositories
         {
           
         }
+
+        public void AssignCoursesToStudent(Student student, int[] courseEdit)
+        {
+            if (courseEdit is null) return;
+
+            foreach (var id in courseEdit)
+            {
+                var course = DbContext.CoursesDbSet.Find(id);
+                if (!(course is null))
+                {
+                    student.Courses.Add(course);
+                }
+            }
+
+            DbContext.SaveChanges();
+        }
+        
+        public void AssignAssignmentsToStudent(Student student, int[] assignmentIds)
+        {
+            if (assignmentIds is null) return;
+
+            foreach (var id in assignmentIds)
+            {
+                var assignment = DbContext.AssignmentsDbSet.Find(id);
+                if (!(assignment is null))
+                {
+                    student.Assignments.Add(assignment);
+                }
+            }
+
+            DbContext.SaveChanges();
+        }
+
+        public void ClearStudentCourses(Student student)
+        {
+            student.Courses.Clear();
+            DbContext.SaveChanges();
+        }
+           public void ClearStudentAssignments(Student student)
+        {
+            student.Assignments.Clear();
+            DbContext.SaveChanges();
+        }
+
+        public void AttachStudentCourses(Student student)
+        {
+            DbContext.StudentsDbSet.Attach(student);
+
+            DbContext.Entry(student).Collection("Courses").Load();
+        }
+        
+        public void AttachStudentAssignments(Student student)
+        {
+            DbContext.StudentsDbSet.Attach(student);
+
+            DbContext.Entry(student).Collection("Assignments").Load();
+        }
+
     }
 }

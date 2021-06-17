@@ -10,9 +10,11 @@ namespace MVCSchool.UnitOfWork.Repositories
 {
     public class TrainersRepos : Repository<Trainer>
     {
-        public ApplicationDbContext ApplicationDbContext { get { return Context as ApplicationDbContext; }
-            set { }
+        public ApplicationDbContext DbContext
+        {
+            get { return Context as ApplicationDbContext; }
         }
+
         public TrainersRepos(ApplicationDbContext context) : base(context)
         {
           
@@ -20,31 +22,30 @@ namespace MVCSchool.UnitOfWork.Repositories
 
         public void AssignCoursesToTrainer(Trainer trainer, int[] courseEdit)
         {
-            if (!(courseEdit is null))
+            if (courseEdit is null) return;
+
+            foreach (var id in courseEdit)
             {
-                foreach (var id in courseEdit)
+                var course = DbContext.CoursesDbSet.Find(id);
+                if (!(course is null ))
                 {
-                    var course = ApplicationDbContext.CoursesDbSet.Find(id);
-                    if (!(course is null ))
-                    {
-                        trainer.Courses.Add(course);
-                    }
+                    trainer.Courses.Add(course);
                 }
-                ApplicationDbContext.SaveChanges();
             }
+            DbContext.SaveChanges();
         }
 
-        public void ClearTrainersCourses(Trainer trainer)
+        public void ClearTrainerCourses(Trainer trainer)
         {
             trainer.Courses.Clear();
-            ApplicationDbContext.SaveChanges();
+            DbContext.SaveChanges();
         }
 
-        public void FindTrainersCourses(Trainer trainer)
+        public void AttachTrainerCourses(Trainer trainer)
         {
-            ApplicationDbContext.TrainersDbSet.Attach(trainer);
+            DbContext.TrainersDbSet.Attach(trainer);
 
-            ApplicationDbContext.Entry(trainer).Collection("Courses").Load();
+            DbContext.Entry(trainer).Collection("Courses").Load();
         }
     }
 }

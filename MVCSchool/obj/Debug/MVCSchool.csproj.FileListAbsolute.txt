@@ -151,8 +151,6 @@ C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin.Security.Twitter.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Owin.dll
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.dll
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.Mvc.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Helpers.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Mvc.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Optimization.dll
@@ -175,8 +173,6 @@ C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.xml
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.Mvc.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Helpers.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Mvc.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\System.Web.Optimization.xml

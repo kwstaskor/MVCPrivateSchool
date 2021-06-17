@@ -49,6 +49,7 @@ namespace MVCSchool.Controllers
             viewModel.Students = SortingStudents(sortOrder, viewModel.Students);
             viewModel.Trainers = SortingTrainers(sortOrder, viewModel.Trainers);
         }
+
         private IEnumerable<Course> SortingCourses(string sortOrder, IEnumerable<Course> courses)
         {
             ViewBag.TitleCSort = string.IsNullOrEmpty(sortOrder) ? "TitleCDesc" : "";
@@ -78,6 +79,7 @@ namespace MVCSchool.Controllers
 
             return courses;
         }
+
         private IEnumerable<Assignment> SortingAssignments(string sortOrder, IEnumerable<Assignment> assignments)
         {
             ViewBag.TitleASort = string.IsNullOrEmpty(sortOrder) ? "TitleADesc" : "";
@@ -107,6 +109,7 @@ namespace MVCSchool.Controllers
 
             return assignments;
         }
+
         private IEnumerable<Student> SortingStudents(string sortOrder, IEnumerable<Student> students)
         {
             ViewBag.FirstNameSSort = string.IsNullOrEmpty(sortOrder) ? "FirstNameSDesc" : "";
@@ -132,6 +135,7 @@ namespace MVCSchool.Controllers
 
             return students;
         }
+
         private IEnumerable<Trainer> SortingTrainers(string sortOrder, IEnumerable<Trainer> trainers)
         {
             ViewBag.FirstNameTSort = string.IsNullOrEmpty(sortOrder) ? "FirstNameTDesc" : "";
@@ -170,6 +174,7 @@ namespace MVCSchool.Controllers
             viewModel.Students = FilteringStudents(searchByNameS, viewModel.Students);
             viewModel.Trainers = FilteringTrainers(searchByNameT, viewModel.Trainers);
         }
+
         private IEnumerable<Course> FilteringCourses(string searchByNameC, IEnumerable<Course> courses)
         {
             if (!string.IsNullOrWhiteSpace(searchByNameC))
@@ -179,6 +184,7 @@ namespace MVCSchool.Controllers
 
             return courses;
         }
+
         private IEnumerable<Student> FilteringStudents(string searchByNameS, IEnumerable<Student> students)
         {
             if (!string.IsNullOrWhiteSpace(searchByNameS))
@@ -188,6 +194,7 @@ namespace MVCSchool.Controllers
 
             return students;
         }
+
         private IEnumerable<Assignment> FilteringAssignments(string searchByNameA, IEnumerable<Assignment> assignments)
         {
             if (!string.IsNullOrWhiteSpace(searchByNameA))
@@ -197,6 +204,7 @@ namespace MVCSchool.Controllers
 
             return assignments;
         }
+
         private IEnumerable<Trainer> FilteringTrainers(string searchByNameT, IEnumerable<Trainer> trainers)
         {
             if (!string.IsNullOrWhiteSpace(searchByNameT))

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
 using MVCSchool.UnitOfWork;
-using PagedList;
+
 
 namespace MVCSchool.Controllers
 {
@@ -17,64 +16,13 @@ namespace MVCSchool.Controllers
            unitOfWork =  new UnitOfWork.UnitOfWork();
         }
 
-        public ActionResult Course(string searchByName , string sortOrder , int? pSize , int? pNumber)
+        public ActionResult Course(string searchByName , string sortOrder)
         {
             var courses = unitOfWork.Courses.Get();
 
-            ViewBag.CurrentName = searchByName;
-            ViewBag.CurrentSortOrder = sortOrder;
-
-            courses = Filtering(searchByName, courses);
-
-            courses = Sorting(sortOrder, courses);
-
-            var pageSize = pSize ?? 5;
-            var pageNumber = pNumber?? 1;
-
-            return View(User.IsInRole("Admin") ? "Course" : "CourseReadOnly", courses.ToPagedList(pageNumber , pageSize));
+            return View(User.IsInRole("Admin") ? "Course" : "CourseReadOnly", courses);
         }
-
-
-        private static IEnumerable<Course> Filtering(string searchByName, IEnumerable<Course> courses)
-        {
-            if (!string.IsNullOrWhiteSpace(searchByName))
-            {
-                courses = courses.Where(c => c.Title.ToUpper().Contains(searchByName.ToUpper())).ToList();
-            }
-
-            return courses;
-        }
-
-        private IEnumerable<Course> Sorting(string sortOrder, IEnumerable<Course> courses)
-        {
-            ViewBag.TitleSort = string.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
-            ViewBag.StreamSort = sortOrder == "StreamAsc" ? "StreamDesc" : "StreamAsc";
-            ViewBag.TypeSort = sortOrder == "TypeAsc" ? "TypeDesc" : "TypeAsc";
-            ViewBag.SdSort = sortOrder == "SdAsc" ? "SdDesc" : "SdAsc";
-            ViewBag.EdSort = sortOrder == "EdAsc" ? "EdDesc" : "EdAsc";
-
-            switch (sortOrder)
-            {
-                case "TitleDesc": courses = courses.OrderByDescending(c => c.Title).ToList(); break;
-
-                case "StreamAsc": courses = courses.OrderBy(c => c.Stream).ToList(); break;
-                case "StreamDesc": courses = courses.OrderByDescending(c => c.Stream).ToList(); break;
-
-                case "TypeAsc": courses = courses.OrderBy(c => c.Type).ToList(); break;
-                case "TypeDesc": courses = courses.OrderByDescending(c => c.Type).ToList(); break;
-
-                case "SdAsc": courses = courses.OrderBy(c => c.StartDate).ToList(); break;
-                case "SdDesc": courses = courses.OrderByDescending(c => c.StartDate).ToList(); break;
-
-                case "EdAsc": courses = courses.OrderBy(c => c.EndDate).ToList(); break;
-                case "EdDesc": courses = courses.OrderByDescending(c => c.EndDate).ToList(); break;
-
-                default: courses = courses.OrderBy(t => t.Title).ToList(); break;
-            }
-
-            return courses;
-        }
-
+      
         public ActionResult Details(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -115,18 +63,32 @@ namespace MVCSchool.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            AddStudentsViewBag();
+            AddTrainersViewBag();
+            AddAssignmentsViewBag();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbCreate([Bind(Include = "CourseId,Title,Stream,Type,StartDate,EndDate")] Course course)
+        public ActionResult DbCreate([Bind(Include = "CourseId,Title,Stream,Type,StartDate,EndDate")] Course course , int[] studentList , int[] trainerList, int[] assignmentList)
         {
 
-            if (!ModelState.IsValid) return RedirectToAction("Create", course);
+            if (!ModelState.IsValid)
+            {
+                AddStudentsViewBag();
+                AddTrainersViewBag();
+                AddAssignmentsViewBag();
+                return RedirectToAction("Create", course);
+            }
            
+            unitOfWork.Courses.AssignStudentsToCourse(course,studentList);
+            unitOfWork.Courses.AssignTrainersToCourse(course,trainerList);
+            unitOfWork.Courses.AssignAssignmentsToCourse(course,assignmentList);
+
             unitOfWork.Courses.Add(course);
             unitOfWork.Save();
+
             return RedirectToAction("Index" , "Admin");
         }
 
@@ -139,19 +101,112 @@ namespace MVCSchool.Controllers
 
             if (course == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
+            EditStudentsViewBag(course);
+            EditTrainersViewBag(course);
+            EditAssignmentsViewBag(course);
+
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbEdit([Bind(Include = "CourseId,Title,Stream,Type,StartDate,EndDate")] Course course)
+        public ActionResult DbEdit([Bind(Include = "CourseId,Title,Stream,Type,StartDate,EndDate")] Course course, int[] studentEdit, int[] trainerEdit, int[] assignmentEdit)
         {
-            if (!ModelState.IsValid) return RedirectToAction("Edit", course);
+            if (!ModelState.IsValid)
+            {
+                EditStudentsViewBag(course);
+                EditTrainersViewBag(course);
+                EditAssignmentsViewBag(course);
+                return RedirectToAction("Edit", course);
+            }
+
+            unitOfWork.Courses.AttachStudentsCourse(course);
+            unitOfWork.Courses.ClearCourseStudents(course);
+            unitOfWork.Courses.AssignStudentsToCourse(course,studentEdit);
+
+            unitOfWork.Courses.AttachTrainersCourse(course);
+            unitOfWork.Courses.ClearCourseTrainers(course);
+            unitOfWork.Courses.AssignTrainersToCourse(course,trainerEdit);
+
+            unitOfWork.Courses.AttachAssignmentsCourse(course);
+            unitOfWork.Courses.ClearCourseAssignments(course);
+            unitOfWork.Courses.AssignAssignmentsToCourse(course,assignmentEdit);
 
             unitOfWork.Courses.Edit(course);
             unitOfWork.Save();
 
             return RedirectToAction("Index", "Admin");
+        }
+
+        private void AddStudentsViewBag()
+        {
+            var students = unitOfWork.Students.Get().ToList().Select(s => new
+            {
+                StudentId = s.StudentId,
+                Name = string.Format($"{s.FirstName} {s.LastName}")
+            });
+            var selectList = new MultiSelectList(students, "StudentId", "Name");
+            ViewBag.studentList = selectList;
+        }
+
+        private void EditStudentsViewBag(Course course)
+        {
+            var students = unitOfWork.Students.Get();
+            unitOfWork.Courses.AttachStudentsCourse(course);
+            var courseStudentsIds = course.Students.Select(student => student.StudentId);
+
+            ViewBag.studentEdit = students.ToList().Select(s => new SelectListItem()
+            {
+                Value = s.StudentId.ToString(),
+                Text = string.Format($"{s.FirstName} {s.LastName}"),
+                Selected = courseStudentsIds.Any(selected => selected == s.StudentId)
+            });
+        }
+
+        private void AddTrainersViewBag()
+        {
+            var trainers = unitOfWork.Trainers.Get().ToList().Select(trainer => new
+            {
+                TrainerId = trainer.TrainerId,
+                Name = string.Format($"{trainer.FirstName} {trainer.LastName}")
+            });
+            var selectList = new MultiSelectList(trainers, "TrainerId", "Name");
+            ViewBag.trainerList = selectList;
+        }
+
+        private void EditTrainersViewBag(Course course)
+        {
+            var trainers = unitOfWork.Trainers.Get();
+            unitOfWork.Courses.AttachTrainersCourse(course);
+            var courseTrainersIds = course.Trainers.Select(trainer => trainer.TrainerId);
+
+            ViewBag.trainerEdit = trainers.ToList().Select(trainer => new SelectListItem()
+            {
+                Value = trainer.TrainerId.ToString(),
+                Text = string.Format($"{trainer.FirstName} {trainer.LastName}"),
+                Selected = courseTrainersIds.Any(selected => selected == trainer.TrainerId)
+            });
+        }
+
+        private void AddAssignmentsViewBag()
+        {
+            var assignments = unitOfWork.Assignments.Get();
+            var selectList = new MultiSelectList(assignments, "AssignmentId", "Title");
+            ViewBag.assignmentList = selectList;
+        }
+
+        private void EditAssignmentsViewBag(Course course)
+        {
+            var assignments = unitOfWork.Assignments.Get();
+            unitOfWork.Courses.AttachAssignmentsCourse(course);
+            var courseAssignmentsIds = course.Assignments.Select(assignment => assignment.AssignmentId);
+
+            ViewBag.assignmentEdit = assignments.ToList().Select(a => new SelectListItem()
+            {
+                Value = a.AssignmentId.ToString(),
+                Text = string.Format($"{a.Title} - {a.Description}"),
+                Selected = courseAssignmentsIds.Any(selected => selected == a.AssignmentId)
+            });
         }
 
         protected override void Dispose(bool disposing)

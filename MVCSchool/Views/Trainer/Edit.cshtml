@@ -13,7 +13,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h6 class="text-center">Register Trainer</h6>
+                    <h6 class="text-center">Edit Trainer</h6>
                 </div>
 
                 @Html.HiddenFor(t => t.TrainerId)
@@ -42,22 +42,24 @@
                             @Html.ValidationMessageFor(t => t.Subject, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    
-                    
-                    <label class="h6">Selected Courses</label>
-                    <ul class="list-unstyled">
-                        @foreach (var course in Model.Courses)
-                        {
-                            <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
-                        }
-                    </ul>
-                    
-                    <button id="crsBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Courses</button>
+
+                    @if (Model.Courses.Count > 0 && Model.Courses.Count < 8)
+                    {
+                        <label class="h6">Selected Courses</label>
+                        <ul class="list-unstyled">
+                            @foreach (var course in Model.Courses)
+                            {
+                                <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
+                            }
+                        </ul>
+                    }
+
+                    <button id="crsEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Courses</button>
 
                     <div id="editCrs" class="form-group mb-5">
-                        @Html.LabelFor(t => t.Courses, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <label class="col-md-4 col-form-label" for="CourseEdit">Courses</label>
                         <div class="col-md-6 offset-md-3">
-                            @Html.ListBox("CourseEdit",(MultiSelectList)ViewBag.CourseEdit, new {@class = "selectpicker form-control ", multiple= "multiple" })
+                            @Html.ListBox("CourseEdit", null, new { @class = "selectpicker form-control ", multiple = "multiple" })
                         </div>
                     </div>
 
@@ -75,16 +77,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap-select.min.js"></script>
-    <script>
-
-        $("#editCrs").hide();
-        $("#crsBtn").click(function () {
-
-            $("#editCrs").slideToggle(800);
-            $(this).text($(this).text() == 'Edit Courses' ? 'Close' : 'Edit Courses');
-            $(this).toggleClass("btn-danger");
-
-        });
-
-    </script>
+    <script src="~/Scripts/MyJS/EditBtns.js"></script>
 }

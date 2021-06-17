@@ -52,9 +52,18 @@
                     <button id="crsBtn" type="button" class="btn btn-sm btn-primary m-2">Add Course</button>
 
                     <div id="addCrs" class="form-group mb-5">
-                        @Html.LabelFor(s => s.Courses, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } })
+                        <label class="col-md-4 col-form-label" for="courseList">Courses</label>
                         <div class="col-md-6 offset-md-3">
-                            @Html.ListBox("courseList", ViewBag.courseList as MultiSelectList, new { @class = "selectpicker form-control" })
+                            @Html.ListBox("courseList", null, new { @class = "selectpicker form-control" })
+                        </div>
+                    </div>
+
+                    <button id="assBtn" type="button" class="btn btn-sm btn-primary m-2">Add Assignment</button>
+
+                    <div id="addAss" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="assignmentList">Assignment</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("assignmentList", null, new { @class = "selectpicker form-control" })
                         </div>
                     </div>
 
@@ -72,17 +81,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap-select.min.js"></script>
-
-    <script>
-
-        $("#addCrs").hide();
-        $("#crsBtn").click(function () {
-
-            $("#addCrs").slideToggle(800);
-            $(this).text($(this).text() == 'Add Course' ? 'Close' : 'Add Course');
-            $(this).toggleClass("btn-danger");
-
-        });
-
-    </script>
+    <script src="~/Scripts/MyJS/AddBtns.js"></script>
 }

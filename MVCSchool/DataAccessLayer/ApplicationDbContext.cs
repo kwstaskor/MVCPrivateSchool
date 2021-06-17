@@ -30,6 +30,7 @@ namespace MVCSchool.DataAccessLayer
             modelBuilder.Configurations.Add(new AssignmentConfig());
             modelBuilder.Configurations.Add(new StudentConfig());
             modelBuilder.Configurations.Add(new TrainerConfig());
+            
         }
 
     }

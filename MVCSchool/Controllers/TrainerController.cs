@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
 using MVCSchool.UnitOfWork;
@@ -30,7 +31,6 @@ namespace MVCSchool.Controllers
             return View(trainer);
         }
 
-
         [HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -60,9 +60,7 @@ namespace MVCSchool.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var courses = unitOfWork.Courses.Get();
-            var selectList = new MultiSelectList(courses, "CourseId", "Title");
-            ViewBag.courseList = selectList;
+            CreatingAddViewBag();
             return View();
         }
 
@@ -70,22 +68,18 @@ namespace MVCSchool.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DbCreate([Bind(Include = "TrainerId , FirstName , LastName , Subject")] Trainer trainer, int[] courseList)
         {
-            if (!ModelState.IsValid) return RedirectToAction("Create", trainer);
-
-            if (!(courseList is null))
+            if (!ModelState.IsValid)
             {
-                foreach (var id in courseList)
-                {
-                    var course = unitOfWork.Courses.FindById(id);
-                    trainer.Courses.Add(course);
-                }
+                CreatingAddViewBag();
+                return RedirectToAction("Create", trainer);
             }
+
+            unitOfWork.Trainers.AssignCoursesToTrainer(trainer, courseList);
             unitOfWork.Trainers.Add(trainer);
             unitOfWork.Save();
 
             return RedirectToAction("Index", "Admin");
         }
-
 
         [HttpGet]
         public ActionResult Edit(int? id)
@@ -96,13 +90,7 @@ namespace MVCSchool.Controllers
 
             if (trainer == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            var courses = unitOfWork.Courses.Get();
-
-            unitOfWork.Trainers.FindTrainersCourses(trainer);
-
-            ViewBag.CourseEdit = new MultiSelectList(courses, "CourseId", "Title");
-
-            
+            CreatingEditViewBag(trainer);
 
             return View(trainer);
         }
@@ -113,19 +101,38 @@ namespace MVCSchool.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var courses = unitOfWork.Courses.Get();
-                ViewBag.CourseEdit = new MultiSelectList(courses, "CourseId", "Title", trainer.Courses);
+                CreatingEditViewBag(trainer);
                 return RedirectToAction("Edit", trainer);
             }
 
-            unitOfWork.Trainers.FindTrainersCourses(trainer);
-            unitOfWork.Trainers.ClearTrainersCourses(trainer);
+            unitOfWork.Trainers.AttachTrainerCourses(trainer);
+            unitOfWork.Trainers.ClearTrainerCourses(trainer);
             unitOfWork.Trainers.AssignCoursesToTrainer(trainer, courseEdit);
             unitOfWork.Trainers.Edit(trainer);
             unitOfWork.Save();
 
             return RedirectToAction("Index", "Admin");
+        }
 
+        private void CreatingAddViewBag()
+        {
+            var courses = unitOfWork.Courses.Get();
+            var selectList = new MultiSelectList(courses, "CourseId", "Title");
+            ViewBag.courseList = selectList;
+        }
+
+        private void CreatingEditViewBag(Trainer trainer)
+        {
+            var courses = unitOfWork.Courses.Get();
+            unitOfWork.Trainers.AttachTrainerCourses(trainer);
+            var trainerCoursesIds = trainer.Courses.Select(course => course.CourseId);
+
+            ViewBag.CourseEdit = courses.ToList().Select(c => new SelectListItem()
+            {
+                Value = c.CourseId.ToString(),
+                Text = string.Format($"{c.Title} {c.Stream}"),
+                Selected = trainerCoursesIds.Any(selected => selected == c.CourseId)
+            });
         }
 
         protected override void Dispose(bool disposing)

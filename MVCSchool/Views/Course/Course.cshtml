@@ -1,5 +1,4 @@
-﻿@model  PagedList.IPagedList<MVCSchool.Models.Course>
-@using PagedList.Mvc
+﻿@model  IEnumerable<MVCSchool.Models.Course>
 
 @{
     ViewBag.Title = "Courses";
@@ -62,8 +61,6 @@
                 }
             </tbody>
         </table>
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, p => @Url.Action("Course", "Course", new { pNumber = p }) , PagedListRenderOptions.TwitterBootstrapPager)
         @Html.ActionLink("Add Course", "Create", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
     </div>

@@ -15,31 +15,31 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Title, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(c => c.Title, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(c => c.Title, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"}})
-                            @Html.ValidationMessageFor(c=>c.Title , "" , new {@class="text-danger" })
+                            @Html.EditorFor(c => c.Title, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(c => c.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Stream, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(c => c.Stream, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(c => c.Stream, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"} })
-                            @Html.ValidationMessageFor(c=>c.Stream,"",new {@class="text-danger"})
+                            @Html.EditorFor(c => c.Stream, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(c => c.Stream, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.Type, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(c => c.Type, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(c => c.Type, new {htmlAttributes = new {@class = "form-control", autocomplete = "off"}})
-                            @Html.ValidationMessageFor(c=>c.Type,"",new {@class="text-danger"})
+                            @Html.EditorFor(c => c.Type, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(c => c.Type, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.StartDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(c => c.StartDate, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
                             @Html.EditorFor(c => c.StartDate, new { htmlAttributes = new { @class = "form-control", min = DateTime.Now.Year - 1 } })
                             @Html.ValidationMessageFor(c => c.StartDate, "", new { @class = "text-danger" })
@@ -47,38 +47,54 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(c => c.EndDate, new {htmlAttributes = new {@class = "col-md-4 col-form-label text-md-right"}}) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(c => c.EndDate, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(c => c.EndDate, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(c=>c.EndDate,"",new {@class="text-danger" })
+                            @Html.EditorFor(c => c.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(c => c.EndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <button id="stdBtn" type="button" class="btn btn-sm btn-primary m-2">Add Student</button>
+
+                    <div id="addStd" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="studentList">Students</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("studentList", null, new { @class = "selectpicker form-control" })
+                        </div>
+                    </div>
+
+                    <button id="trBtn" type="button" class="btn btn-sm btn-primary m-2">Add Trainer</button>
+
+                    <div id="addTr" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="trainerList">Trainers</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("trainerList", null, new { @class = "selectpicker form-control" })
+                        </div>
+                    </div>
+
+                    <button id="assBtn" type="button" class="btn btn-sm btn-primary m-2">Add Assignment</button>
+
+                    <div id="addAss" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="assignmentList">Assignments</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("assignmentList", null, new { @class = "selectpicker form-control" })
                         </div>
                     </div>
 
                     <div class="col-md-6 offset-md-3">
-                        <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset"/>
-                        <input type="submit" class="btn btn-success btn-block" value="Register"/>
+                        <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset" />
+                        <input type="submit" class="btn btn-success btn-block" value="Register" />
                     </div>
                 </div>
             </div>
-            @Html.ActionLink("Return", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm" })
+            @Html.ActionLink("Return", "Index", "Admin", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    
-    <script>
-        jQuery.validator.addMethod("datemustbeequalorgreaterthanstartdate", function (value, element, param) {
-            var endDate = $("#EndDate").val();
-            var startDate = $("#StartDate").val();
-
-            if (endDate < startDate) {
-                return false;
-            }
-            return true;
-        });
-
-        jQuery.validator.unobtrusive.adapters.addBool("datemustbeequalorgreaterthanstartdate");
-    </script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/MyJS/ValidateCourseDates.js"></script>
+    <script src="~/Scripts/MyJS/AddBtns.js"></script>
 }

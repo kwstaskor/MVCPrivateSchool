@@ -20,6 +20,7 @@ namespace MVCSchool.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
 
+            #region Seed Students
             var s1 = new Student()
             {
                 FirstName = "Kostas",
@@ -91,13 +92,15 @@ namespace MVCSchool.Migrations
                 TuitionFee = 2500
             };
 
-            var students = new List<Student>() { s1, s2, s3, s4, s5, s6,s7,s8,s9,s10 };
+            var students = new List<Student>() { s1, s2, s3, s4, s5, s6, s7, s8, s9, s10 };
 
             foreach (var student in students)
             {
                 context.StudentsDbSet.AddOrUpdate(s => new { s.FirstName, s.LastName }, student);
-            }
+            } 
+            #endregion
 
+            #region Seed Assignments
             var a1 = new Assignment()
             {
                 AssignmentId = 1,
@@ -145,8 +148,10 @@ namespace MVCSchool.Migrations
             foreach (var assignment in assignments)
             {
                 context.AssignmentsDbSet.AddOrUpdate(a => a.AssignmentId, assignment);
-            }
+            } 
+            #endregion
 
+            #region Seed Trainers
             var t1 = new Trainer()
             {
                 FirstName = "Gandalf",
@@ -196,17 +201,20 @@ namespace MVCSchool.Migrations
                 Subject = "Web Security"
             };
 
-            var trainers = new List<Trainer>() { t1, t2, t3, t4 ,t5,t6,t7,t8 };
+            var trainers = new List<Trainer>() { t1, t2, t3, t4, t5, t6, t7, t8 };
 
             foreach (var trainer in trainers)
             {
                 context.TrainersDbSet.AddOrUpdate(t => new { t.FirstName, t.LastName }, trainer);
             }
 
+            #endregion
+
+            #region Seed Courses
             var c1 = new Course
             {
                 CourseId = 1,
-                Title = "Programing Advanced",
+                Title = "Spring Boot",
                 Stream = "Java",
                 Type = "Full Time",
                 StartDate = new DateTime(2021, 2, 15),
@@ -218,7 +226,7 @@ namespace MVCSchool.Migrations
             var c2 = new Course
             {
                 CourseId = 2,
-                Title = "Programing Fundamentals",
+                Title = "Hibernate",
                 Stream = "Java",
                 Type = "Part Time",
                 StartDate = new DateTime(2021, 2, 15),
@@ -230,28 +238,28 @@ namespace MVCSchool.Migrations
             var c3 = new Course
             {
                 CourseId = 3,
-                Title = "Programing Advanced",
+                Title = "Asp Net MVC",
                 Stream = "Csharp",
                 Type = "Full Time",
                 StartDate = new DateTime(2021, 2, 15),
                 EndDate = new DateTime(2021, 5, 15),
                 Assignments = new Collection<Assignment>() { a3, a4 },
-                Students = new Collection<Student>() { s4, s5,s9 },
+                Students = new Collection<Student>() { s4, s5, s9 },
                 Trainers = new Collection<Trainer>() { t3 }
 
             };
             var c4 = new Course
             {
                 CourseId = 4,
-                Title = "Programing Fundamentals",
+                Title = "Entity Framework",
                 Stream = "Csharp",
                 Type = "Part Time",
                 StartDate = new DateTime(2021, 2, 15),
                 EndDate = new DateTime(2021, 9, 15),
                 Assignments = new Collection<Assignment>() { a3, a4 },
                 Students = new Collection<Student>() { s4, s5, s6 },
-                Trainers = new Collection<Trainer>() { t3, t4,t1 }
-            };   
+                Trainers = new Collection<Trainer>() { t3, t4, t1 }
+            };
             var c5 = new Course
             {
                 CourseId = 5,
@@ -263,7 +271,7 @@ namespace MVCSchool.Migrations
                 Assignments = new Collection<Assignment>() { a3, a4 },
                 Students = new Collection<Student>() { s7, s8, s10 },
                 Trainers = new Collection<Trainer>() { t8 }
-            }; 
+            };
             var c6 = new Course
             {
                 CourseId = 6,
@@ -274,7 +282,7 @@ namespace MVCSchool.Migrations
                 EndDate = new DateTime(2022, 2, 15),
                 Assignments = new Collection<Assignment>() { a3, a4 },
                 Students = new Collection<Student>() { s2, s3, s10 },
-                Trainers = new Collection<Trainer>() { t7,t2 }
+                Trainers = new Collection<Trainer>() { t7, t2 }
             };
             var c7 = new Course
             {
@@ -286,16 +294,18 @@ namespace MVCSchool.Migrations
                 EndDate = new DateTime(2022, 2, 15),
                 Assignments = new Collection<Assignment>() { a2, a1 },
                 Students = new Collection<Student>() { s7, s5, s10 },
-                Trainers = new Collection<Trainer>() { t5,t6 }
+                Trainers = new Collection<Trainer>() { t5, t6 }
             };
 
-            var courses = new List<Course>() { c1, c2, c3, c4,c5,c6,c7 };
+            var courses = new List<Course>() { c1, c2, c3, c4, c5, c6, c7 };
 
             foreach (var course in courses)
             {
                 context.CoursesDbSet.AddOrUpdate(c => c.CourseId, course);
-            }
+            } 
+            #endregion
 
+            context.SaveChanges();
         }
 
     }

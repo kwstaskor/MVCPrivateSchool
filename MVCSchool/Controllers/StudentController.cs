@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
 using MVCSchool.UnitOfWork;
@@ -13,7 +14,6 @@ namespace MVCSchool.Controllers
         {
             unitOfWork = new UnitOfWork.UnitOfWork();
         }
-
 
         public ActionResult Student()
         {
@@ -58,27 +58,24 @@ namespace MVCSchool.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var courses = unitOfWork.Courses.Get();
-            var selectList = new MultiSelectList(courses, "CourseId", "Title");
-            ViewBag.courseList = selectList;
+            AddCoursesViewBag();
+            AddAssignmentsViewBag();
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbCreate([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student,int[] courseList)
+        public ActionResult DbCreate([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student,int[] courseList , int[] assignmentList)
         {
-            if (!(courseList is null))
+            if (!ModelState.IsValid)
             {
-                foreach (var id in courseList)
-                {
-                    var course = unitOfWork.Courses.FindById(id);
-                    student.Courses.Add(course);
-                }
+                AddCoursesViewBag();
+                AddAssignmentsViewBag();
+                return RedirectToAction("Create", student);
             }
 
-            if (!ModelState.IsValid) return RedirectToAction("Create", student);
+            unitOfWork.Students.AssignCoursesToStudent(student,courseList);
+            unitOfWork.Students.AssignAssignmentsToStudent(student,assignmentList);
 
             unitOfWork.Students.Add(student);
             unitOfWork.Save();
@@ -94,19 +91,77 @@ namespace MVCSchool.Controllers
 
             if (student == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
+            EditCoursesViewBag(student);
+            EditAssignmentsViewBag(student);
+
             return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbEdit([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student)
+        public ActionResult DbEdit([Bind(Include = "StudentId , FirstName , LastName , DateOfBirth , TuitionFee")] Student student , int[] courseEdit , int[] assignmentEdit)
         {
-            if (!ModelState.IsValid) return RedirectToAction("Edit", student);
+            if (!ModelState.IsValid)
+            {
+                EditCoursesViewBag(student);
+                EditAssignmentsViewBag(student);
+                return RedirectToAction("Edit", student);
+            }
+
+            unitOfWork.Students.AttachStudentCourses(student);
+            unitOfWork.Students.ClearStudentCourses(student);
+            unitOfWork.Students.AssignCoursesToStudent(student,courseEdit);
+
+            unitOfWork.Students.AttachStudentAssignments(student);
+            unitOfWork.Students.ClearStudentAssignments(student);
+            unitOfWork.Students.AssignAssignmentsToStudent(student,assignmentEdit);
 
             unitOfWork.Students.Edit(student);
             unitOfWork.Save();
 
             return RedirectToAction("Index", "Admin");
+        }
+
+        private void EditCoursesViewBag(Student student)
+        {
+            var courses = unitOfWork.Courses.Get();
+            unitOfWork.Students.AttachStudentCourses(student);
+            var studentCoursesIds = student.Courses.Select(course => course.CourseId);
+
+            ViewBag.courseEdit = courses.ToList().Select(c => new SelectListItem()
+            {
+                Value = c.CourseId.ToString(),
+                Text = string.Format($"{c.Title} {c.Stream}"),
+                Selected = studentCoursesIds.Any(selected => selected == c.CourseId)
+            });
+        }
+        
+        private void EditAssignmentsViewBag(Student student)
+        {
+            var assignments = unitOfWork.Assignments.Get();
+            unitOfWork.Students.AttachStudentAssignments(student);
+            var studentCoursesIds = student.Assignments.Select(assignment => assignment.AssignmentId);
+
+            ViewBag.assignmentEdit = assignments.ToList().Select(a => new SelectListItem()
+            {
+                Value = a.AssignmentId.ToString(),
+                Text = string.Format($"{a.Title} - {a.Description}"),
+                Selected = studentCoursesIds.Any(selected => selected == a.AssignmentId)
+            });
+        }
+
+        private void AddCoursesViewBag()
+        {
+            var courses = unitOfWork.Courses.Get();
+            var selectList = new MultiSelectList(courses, "CourseId", "Title");
+            ViewBag.courseList = selectList;
+        }
+
+        private void AddAssignmentsViewBag()
+        {
+            var assignments = unitOfWork.Assignments.Get();
+            var selectList = new MultiSelectList(assignments, "AssignmentId", "Title");
+            ViewBag.assignmentList = selectList;
         }
 
         protected override void Dispose(bool disposing)

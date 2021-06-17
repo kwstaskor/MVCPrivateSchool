@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MVCSchool.Models.Validations
 {
     public class CourseDatesVal : ValidationAttribute, IClientValidatable
     {
-        private const string DefaultErrorMessage = "Date selected {0} must be on or after Start Date";
+        private const string DefaultErrorMessage = "{0} must be on or after Start Date";
 
         public CourseDatesVal()
             : base(DefaultErrorMessage)

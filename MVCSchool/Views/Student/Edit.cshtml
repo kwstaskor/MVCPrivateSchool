@@ -39,7 +39,7 @@
                         @Html.LabelFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <br />
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type= "date"  , min = DateTime.Now.Year-100 , max = DateTime.Now.Year - 18} })
+                            @Html.EditorFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "date", min = DateTime.Now.Year - 100, max = DateTime.Now.Year - 18 } })
                             @Html.ValidationMessageFor(s => s.DateOfBirth, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -51,6 +51,48 @@
                             @Html.ValidationMessageFor(s => s.TuitionFee, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    
+                    @if (Model.Courses.Count > 0 && Model.Courses.Count < 8)
+                    {
+                        <label class="h6">Selected Courses</label>
+                        <ul class="list-unstyled">
+                            @foreach (var course in Model.Courses)
+                            {
+                                <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
+                            }
+                        </ul>
+                    }
+
+                    <button id="crsEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Courses</button>
+
+                    <div id="editCrs" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="CourseEdit">Courses</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("CourseEdit", null, new { @class = "selectpicker form-control " })
+                        </div>
+                    </div>
+
+                    <br />
+                    
+                    @if (Model.Assignments.Count > 0 && Model.Assignments.Count < 8)
+                    {
+                        <label class="h6">Selected Assignments</label>
+                        <ul class="list-unstyled">
+                            @foreach (var assignment in Model.Assignments)
+                            {
+                                <li class="form-check-inline"><i class="fa fa-check-circle-o"> @assignment.Title</i> </li>
+                            }
+                        </ul>
+                    }
+
+                    <button id="assEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Assignment</button>
+
+                    <div id="editAss" class="form-group mb-5">
+                        <label class="col-md-4 col-form-label" for="assignmentEdit">Assignment</label>
+                        <div class="col-md-6 offset-md-3">
+                            @Html.ListBox("assignmentEdit", null, new { @class = "selectpicker form-control " })
+                        </div>
+                    </div>
 
                     <div class="col-md-6 offset-md-3">
                         <input type="reset" class="btn btn-outline-secondary btn-block" value="Reset" />
@@ -58,11 +100,13 @@
                     </div>
                 </div>
             </div>
-            @Html.ActionLink("Return", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm" })
+            @Html.ActionLink("Return", "Index", "Admin", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    <script src="~/Scripts/MyJS/EditBtns.js"></script>
 }

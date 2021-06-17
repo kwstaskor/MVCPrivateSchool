@@ -1,5 +1,4 @@
-﻿@using PagedList.Mvc
-@model MVCSchool.Models.ViewModels.AdminViewModel
+﻿@model MVCSchool.Models.ViewModels.AdminViewModel
 
 
 <div class="row">
@@ -61,10 +60,7 @@
                     }
                 </tbody>
             </table>
-            @*Page @(Model.Courses.PageCount < Model.Courses.PageNumber ? 0 : Model.Courses.PageNumber) of @Model.Courses.PageCount*@
-            @*@Html.PagedListPager(Model.Courses, p => @Url.Action("Course", "Course", new { pNumber = p }), PagedListRenderOptions.TwitterBootstrapPager)*@
             @Html.ActionLink("Add Course", "Create", "Course", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
-            @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 
@@ -127,7 +123,6 @@
                 </tbody>
             </table>
             @Html.ActionLink("Add Assignment", "Create", "Assignment", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
-            @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
         </div>
     </div>
 
@@ -142,13 +137,13 @@
 
         <div class="container pull-left mt-1 mb-1">
             <div class="input-group rounded">
-                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new {@class = "form-inline"}))
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
                 {
-                    @Html.TextBox("searchByNameS", null, new {@class = "form-control", placeholder = "Search", type = "search"})
-                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder"/>
+                    @Html.TextBox("searchByNameS", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
 
-                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search"/>
-                    <input id="resetButtonS" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset"/>
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                    <input id="resetButtonS" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
                 }
             </div>
         </div>
@@ -156,41 +151,40 @@
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-light table-striped text-center">
                 <thead class="thead-dark">
-                <tr>
-                    <th>
-                        @Html.ActionLink("First Name", "Index", "Admin", new {sortOrder = ViewBag.FirstNameSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
-                    </th>
-                    <th>
-                        @Html.ActionLink("Last Name", "Index", "Admin", new {sortOrder = ViewBag.LastNameSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
-                    </th>
-                    <th>
-                        @Html.ActionLink("Date of Birth", "Index", "Admin", new {sortOrder = ViewBag.DoBSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
-                    </th>
-                    <th>
-                        @Html.ActionLink("Tuition Fee", "Index", "Admin", new {sortOrder = ViewBag.FeeSSort, searchByNameS = ViewBag.CurrentNameS}, new {style = "text-decoration:none"})
-                    </th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>
+                            @Html.ActionLink("First Name", "Index", "Admin", new { sortOrder = ViewBag.FirstNameSSort, searchByNameS = ViewBag.CurrentNameS }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Last Name", "Index", "Admin", new { sortOrder = ViewBag.LastNameSSort, searchByNameS = ViewBag.CurrentNameS }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Date of Birth", "Index", "Admin", new { sortOrder = ViewBag.DoBSSort, searchByNameS = ViewBag.CurrentNameS }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Tuition Fee", "Index", "Admin", new { sortOrder = ViewBag.FeeSSort, searchByNameS = ViewBag.CurrentNameS }, new { style = "text-decoration:none" })
+                        </th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (var student in Model.Students)
-                {
-                    <tr id="@student.StudentId">
-                        <td>@student.FirstName</td>
-                        <td>@student.LastName</td>
-                        <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
-                        <td>@student.TuitionFee &euro;</td>
-                        <td>
-                            @Html.ActionLink("Info", "Details", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-outline-info m-1"})
-                            @Html.ActionLink("Edit", "Edit", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-success m-1"})
-                            @Html.ActionLink("Delete", "Delete", "Student", new {id = student.StudentId}, new {@class = "btn btn-sm btn-danger m-1"})
-                        </td>
-                    </tr>
-                }
+                    @foreach (var student in Model.Students)
+                    {
+                        <tr id="@student.StudentId">
+                            <td>@student.FirstName</td>
+                            <td>@student.LastName</td>
+                            <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
+                            <td>@student.TuitionFee &euro;</td>
+                            <td>
+                                @Html.ActionLink("Info", "Details", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                                @Html.ActionLink("Edit", "Edit", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-success m-1" })
+                                @Html.ActionLink("Delete", "Delete", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-danger m-1" })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
-            @Html.ActionLink("Add Student", "Create", "Student", null, new {@class = "btn btn-sm btn-primary m-1 pull-right"})
-            @Html.ActionLink("Return", "Index", "Home", null, new {@class = "btn btn-outline-info btn-sm"})
+            @Html.ActionLink("Add Student", "Create", "Student", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         </div>
     </div>
 
@@ -200,13 +194,13 @@
 
         <div class="container pull-left mt-1 mb-1">
             <div class="input-group rounded">
-                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new {@class = "form-inline"}))
+                @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
                 {
-                    @Html.TextBox("searchByNameT", null, new {@class = "form-control", placeholder = "Search", type = "search"})
-                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder"/>
+                    @Html.TextBox("searchByNameT", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                    <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
 
-                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search"/>
-                    <input id="resetButtonT" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset"/>
+                    <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                    <input id="resetButtonT" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
                 }
             </div>
         </div>
@@ -216,13 +210,13 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>
-                        @Html.ActionLink("First Name", "Index", "Admin", new {sortOrder = ViewBag.FirstNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                        @Html.ActionLink("First Name", "Index", "Admin", new { sortOrder = ViewBag.FirstNameTSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
                     </th>
                     <th>
-                        @Html.ActionLink("Last Name", "Index", "Admin", new {sortOrder = ViewBag.LastNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                        @Html.ActionLink("Last Name", "Index", "Admin", new { sortOrder = ViewBag.LastNameTSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
                     </th>
                     <th>
-                        @Html.ActionLink("Subject", "Index", "Admin", new {sortOrder = ViewBag.SubjectSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                        @Html.ActionLink("Subject", "Index", "Admin", new { sortOrder = ViewBag.SubjectSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
                     </th>
                     <th>Actions</th>
                 </tr>
@@ -235,16 +229,21 @@
                         <td>@trainer.LastName</td>
                         <td>@trainer.Subject</td>
                         <td>
-                            @Html.ActionLink("Info", "Details", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-outline-info m-1"})
-                            @Html.ActionLink("Edit", "Edit", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-success m-1"})
-                            @Html.ActionLink("Delete", "Delete", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-danger m-1"})
+                            @Html.ActionLink("Info", "Details", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                            @Html.ActionLink("Edit", "Edit", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-success m-1" })
+                            @Html.ActionLink("Delete", "Delete", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-danger m-1" })
                         </td>
                     </tr>
                 }
                 </tbody>
             </table>
-            @Html.ActionLink("Add Trainer", "Create", "Trainer", null, new {@class = "btn btn-sm btn-primary m-1 pull-right"})
-            @Html.ActionLink("Return", "Index", "Home", null, new {@class = "btn btn-outline-info btn-sm"})
+            @Html.ActionLink("Add Trainer", "Create", "Trainer", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+        </div>
+    </div>
+    @*Return Button*@
+    <div class="col-md-6">
+        <div class="container pull-left">
+            @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-lg" })
         </div>
     </div>
 </div>
@@ -254,27 +253,27 @@
 {
     <script>
 
-        $("#resetButtonC").click(function(e) {
+        $("#resetButtonC").click(function (e) {
 
-                $("#searchByNameC").val("");
-            }
+            $("#searchByNameC").val("");
+        }
         );
 
-        $("#resetButtonA").click(function(e) {
+        $("#resetButtonA").click(function (e) {
 
-                $("#searchByNameA").val("");
-            }
+            $("#searchByNameA").val("");
+        }
         );
 
-        $("#resetButtonS").click(function(e) {
+        $("#resetButtonS").click(function (e) {
 
-                $("#searchByNameS").val("");
-            }
+            $("#searchByNameS").val("");
+        }
         );
-        $("#resetButtonT").click(function(e) {
+        $("#resetButtonT").click(function (e) {
 
-                $("#searchByNameT").val("");
-            }
+            $("#searchByNameT").val("");
+        }
         );
 
     </script>
