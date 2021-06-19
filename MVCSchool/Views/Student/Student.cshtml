@@ -3,39 +3,25 @@
     ViewBag.Title = "Students";
 }
 
+<div class="container">
+    <h3 class="text-center m-5">Our Students</h3>
+    <div class="row m-2">
+        @foreach (var student in Model)
+        {
 
-<div class="container-fluid">
-    <h2 class="m-4 text-center">Students</h2>
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a class="text-decoration-none" href="~/Student/Details/@student.StudentId">@student.FirstName @student.LastName</a></h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Age:</strong> @student.Age</li>
+                            <li><strong>Date of Birth:</strong> @student.DateOfBirth.ToString("dd MMMM yyyy")</li>
+                        </ul>
+                        <a href="~/Student/Details/@student.StudentId" class="btn btn-outline-info btn-sm">More Details</a>
+                    </div>
+                </div>
+            </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-light table-striped text-center">
-            <thead class="thead-dark">
-            <tr>
-                <th>@Html.DisplayNameFor(s => s.FirstName)</th>
-                <th>@Html.DisplayNameFor(s => s.LastName)</th>
-                <th>@Html.DisplayNameFor(s => s.DateOfBirth)</th>
-                <th>@Html.DisplayNameFor(s => s.TuitionFee)</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var student in Model)
-            {
-                <tr id="@student.StudentId">
-                    <td>@student.FirstName</td>
-                    <td>@student.LastName</td>
-                    <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
-                    <td>@student.TuitionFee &euro;</td>
-                    <td>
-                        @Html.ActionLink("Info", "Details", new { id = student.StudentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
-                        @Html.ActionLink("Edit", "Edit", new { id = student.StudentId }, new { @class = "btn btn-sm btn-success m-1" })
-                        @Html.ActionLink("Delete", "Delete", new { id = student.StudentId }, new { @class = "btn btn-sm btn-danger m-1" })
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        @Html.ActionLink("Add Student", "Create", null, new { @class = "btn btn-sm btn-primary m-1 pull-right"})
-        @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm"})
+        }
     </div>
 </div>

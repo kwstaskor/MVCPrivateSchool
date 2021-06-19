@@ -1,5 +1,5 @@
 ﻿@model MVCSchool.Models.ViewModels.AdminViewModel
-
+@using PagedList.Mvc;
 
 <div class="row">
     @*Courses*@
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var course in Model.Courses)
+                    @foreach (var course in Model.PagedCourses)
                     {
                         <tr id="@course.CourseId">
                             <td>@course.Title</td>
@@ -60,6 +60,11 @@
                     }
                 </tbody>
             </table>
+
+            Page @(Model.PagedCourses.PageCount < Model.PagedCourses.PageNumber ? 0 : Model.PagedCourses.PageNumber) of @Model.PagedCourses.PageCount
+            @Html.PagedListPager(Model.PagedCourses, x => @Url.Action("Index", "Admin", new { pageC = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
+
             @Html.ActionLink("Add Course", "Create", "Course", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         </div>
     </div>
@@ -105,7 +110,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var assignment in Model.Assignments)
+                    @foreach (var assignment in Model.PagedAssignments)
                     {
                         <tr id="@assignment.AssignmentId">
                             <td>@assignment.Title</td>
@@ -122,6 +127,9 @@
                     }
                 </tbody>
             </table>
+            Page @(Model.PagedAssignments.PageCount < Model.PagedAssignments.PageNumber ? 0 : Model.PagedAssignments.PageNumber) of @Model.PagedAssignments.PageCount
+            @Html.PagedListPager(Model.PagedAssignments, x => @Url.Action("Index", "Admin", new { pageA = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
             @Html.ActionLink("Add Assignment", "Create", "Assignment", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         </div>
     </div>
@@ -168,7 +176,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var student in Model.Students)
+                    @foreach (var student in Model.PagedStudents)
                     {
                         <tr id="@student.StudentId">
                             <td>@student.FirstName</td>
@@ -184,6 +192,9 @@
                     }
                 </tbody>
             </table>
+            Page @(Model.PagedStudents.PageCount < Model.PagedStudents.PageNumber ? 0 : Model.PagedStudents.PageNumber) of @Model.PagedStudents.PageCount
+            @Html.PagedListPager(Model.PagedStudents, x => @Url.Action("Index", "Admin", new { pageS = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
             @Html.ActionLink("Add Student", "Create", "Student", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         </div>
     </div>
@@ -210,33 +221,44 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>
-                        @Html.ActionLink("First Name", "Index", "Admin", new { sortOrder = ViewBag.FirstNameTSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
+                      Image
                     </th>
                     <th>
-                        @Html.ActionLink("Last Name", "Index", "Admin", new { sortOrder = ViewBag.LastNameTSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
+                        @Html.ActionLink("First Name", "Index", "Admin", new {sortOrder = ViewBag.FirstNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
                     </th>
                     <th>
-                        @Html.ActionLink("Subject", "Index", "Admin", new { sortOrder = ViewBag.SubjectSort, searchByNameT = ViewBag.CurrentNameT }, new { style = "text-decoration:none" })
+                        @Html.ActionLink("Last Name", "Index", "Admin", new {sortOrder = ViewBag.LastNameTSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        @Html.ActionLink("Subject", "Index", "Admin", new {sortOrder = ViewBag.SubjectSort, searchByNameT = ViewBag.CurrentNameT}, new {style = "text-decoration:none"})
+                    </th>
+                    <th>
+                        Years of Experience
                     </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var trainer in Model.Trainers)
-                {
-                    <tr id="@trainer.TrainerId">
-                        <td>@trainer.FirstName</td>
-                        <td>@trainer.LastName</td>
-                        <td>@trainer.Subject</td>
-                        <td>
-                            @Html.ActionLink("Info", "Details", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-outline-info m-1" })
-                            @Html.ActionLink("Edit", "Edit", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-success m-1" })
-                            @Html.ActionLink("Delete", "Delete", "Trainer", new { id = trainer.TrainerId }, new { @class = "btn btn-sm btn-danger m-1" })
-                        </td>
-                    </tr>
-                }
+                    @foreach (var trainer in Model.PagedTrainers)
+                    {
+                        <tr id="@trainer.TrainerId">
+                            <td><img width="70px" src="@trainer.PhotoUrl"/> </td>
+                            <td>@trainer.FirstName</td>
+                            <td>@trainer.LastName</td>
+                            <td>@trainer.Subject</td>
+                            <td>@trainer.YearsOfExperience</td>
+                            <td>
+                                @Html.ActionLink("Info", "Details", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-outline-info m-1"})
+                                @Html.ActionLink("Edit", "Edit", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-success m-1"})
+                                @Html.ActionLink("Delete", "Delete", "Trainer", new {id = trainer.TrainerId}, new {@class = "btn btn-sm btn-danger m-1"})
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
+            Page @(Model.PagedTrainers.PageCount < Model.PagedTrainers.PageNumber ? 0 : Model.PagedTrainers.PageNumber) of @Model.PagedTrainers.PageCount
+            @Html.PagedListPager(Model.PagedTrainers, x => @Url.Action("Index", "Admin", new { pageT = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
             @Html.ActionLink("Add Trainer", "Create", "Trainer", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
         </div>
     </div>
@@ -251,30 +273,5 @@
 
 @section scripts
 {
-    <script>
-
-        $("#resetButtonC").click(function (e) {
-
-            $("#searchByNameC").val("");
-        }
-        );
-
-        $("#resetButtonA").click(function (e) {
-
-            $("#searchByNameA").val("");
-        }
-        );
-
-        $("#resetButtonS").click(function (e) {
-
-            $("#searchByNameS").val("");
-        }
-        );
-        $("#resetButtonT").click(function (e) {
-
-            $("#searchByNameT").val("");
-        }
-        );
-
-    </script>
+    <script src="~/Scripts/MyJS/ResetButtons.js"></script>
 }

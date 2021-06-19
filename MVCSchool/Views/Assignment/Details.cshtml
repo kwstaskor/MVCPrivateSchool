@@ -33,8 +33,15 @@
             }
         </ul>
     }
+    @if (User.IsInRole("Admin"))
+    { 
+        @Html.ActionLink("Return to Manage", "Index", "Admin",null, new { @class = "btn btn-outline-info btn-sm m-2" })
+        @Html.ActionLink("Return to Assignments", "Assignment","Assignment",null, new { @class = "btn btn-outline-info btn-sm" })      }
+    else
+    {
+        @Html.ActionLink("Return", "Assignment","Assignment",null, new { @class = "btn btn-outline-info btn-sm" })
+    }
 
-
-    @Html.ActionLink("Return", "Index", "Admin",null, new { @class = "btn btn-outline-info btn-sm" })
+   
 </div>
 

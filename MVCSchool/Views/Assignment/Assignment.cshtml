@@ -3,41 +3,27 @@
     ViewBag.Title = "Assignments";
 }
 
+<div class="container">
+    <h3 class="text-center m-5">Our Assignments</h3>
+    <div class="row m-2">
+        @foreach (var assignment in Model)
+        {
 
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a class="text-decoration-none" href="~/Assignment/Details/@assignment.AssignmentId">@assignment.Title</a></h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Description:</strong> @assignment.Description</li>
+                            <li><strong>Oral Mark:</strong> @assignment.OralMark</li>
+                            <li><strong>Total Mark:</strong> @assignment.TotalMark</li>
+                            <li><strong>Submission:</strong>@assignment.Submission</li>
+                        </ul>
+                        <a href="~/Assignment/Details/@assignment.AssignmentId" class="btn btn-outline-info btn-sm">More Details</a>
+                    </div>
+                </div>
+            </div>
 
-<div class="container-fluid">
-    <h2 class="m-4 text-center">Assignments</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-light table-striped text-center">
-            <thead class="thead-dark">
-            <tr>
-                <th>@Html.DisplayNameFor(a=>a.Title)</th>
-                <th>@Html.DisplayNameFor(a => a.Description)</th>
-                <th>@Html.DisplayNameFor(a => a.Submission)</th>
-                <th>@Html.DisplayNameFor(a => a.OralMark)</th>
-                <th>@Html.DisplayNameFor(a => a.TotalMark)</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var assignment in Model)
-            {
-                <tr id="@assignment.AssignmentId">
-                    <td>@assignment.Title</td>
-                    <td>@assignment.Description</td>
-                    <td>@assignment.Submission</td>
-                    <td>@assignment.OralMark</td>
-                    <td>@assignment.TotalMark</td>
-                    <td>
-                        @Html.ActionLink("Info", "Details", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
-                        @Html.ActionLink("Edit", "Edit", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-success m-1" })
-                        @Html.ActionLink("Delete", "Delete", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-danger m-1" })
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        @Html.ActionLink("Add Assignment" , "Create","Assignment" , null,new {@class = "btn btn-sm btn-primary m-1 pull-right"})
-        @Html.ActionLink("Return" , "Index","Home" , null,new { @class = "btn btn-outline-info btn-sm" })
+        }
     </div>
 </div>

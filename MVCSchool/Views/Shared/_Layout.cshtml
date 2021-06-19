@@ -10,7 +10,7 @@
 </head>
 <body>
     @*navbar*@
-    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbaresponsive">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,8 +31,9 @@
                     <li class="nav-item">@Html.ActionLink("Management", "Index", "Admin")</li>
                 }
                 <li class="nav-item">@Html.ActionLink("About", "About", "Home")</li>
+                @Html.Partial("_LoginPartial")
             </ul>
-            @Html.Partial("_LoginPartial")
+          
         </div>
     </nav>
     <div class="container-fluid body-content">

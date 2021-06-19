@@ -1,8 +1,9 @@
 ﻿namespace MVCSchool.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialModel : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -37,8 +38,8 @@
                 c => new
                     {
                         StudentId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false, maxLength: 20),
-                        LastName = c.String(nullable: false, maxLength: 20),
+                        FirstName = c.String(nullable: false, maxLength: 50),
+                        LastName = c.String(nullable: false, maxLength: 50),
                         DateOfBirth = c.DateTime(nullable: false, storeType: "date"),
                         TuitionFee = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
@@ -49,8 +50,11 @@
                 c => new
                     {
                         TrainerId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false, maxLength: 20),
-                        LastName = c.String(nullable: false, maxLength: 20),
+                        FirstName = c.String(nullable: false, maxLength: 50),
+                        LastName = c.String(nullable: false, maxLength: 50),
+                        YearsOfExperience = c.String(nullable: false, maxLength: 5),
+                        Bio = c.String(nullable: false, maxLength: 1000),
+                        PhotoUrl = c.String(),
                         Subject = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.TrainerId);

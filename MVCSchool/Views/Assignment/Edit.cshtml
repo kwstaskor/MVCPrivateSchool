@@ -1,4 +1,4 @@
-﻿@model MVCSchool.Models.Assignment
+﻿@model MVCSchool.Models.ViewModels.AssignmentViewModel
 @{
     ViewBag.Title = "Edit";
 }
@@ -15,54 +15,54 @@
                     <h6 class="text-center">Edit Assignment</h6>
                 </div>
 
-                @Html.HiddenFor(a => a.AssignmentId)
+                @Html.HiddenFor(a => a.Assignment.AssignmentId)
 
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Title, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(a => a.Assignment.Title, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.Title, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(a => a.Title, "", new { @class = "text-danger" })
+                            @Html.EditorFor(a => a.Assignment.Title, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(a => a.Assignment.Title, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Description, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(a => a.Assignment.Description, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.Description, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(a => a.Description, "", new { @class = "text-danger" })
+                            @Html.EditorFor(a => a.Assignment.Description, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(a => a.Assignment.Description, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.Submission, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(a => a.Assignment.Submission, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.Submission, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "datetime", placeholder = "yyyy-mm-dd hh:mm", min = DateTime.Now.Year - 1 } })
-                            @Html.ValidationMessageFor(a => a.Submission, "", new { @class = "text-danger" })
+                            @Html.EditorFor(a => a.Assignment.Submission, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "datetime", placeholder = "yyyy-mm-dd hh:mm", min = DateTime.Now.Year - 1 } })
+                            @Html.ValidationMessageFor(a => a.Assignment.Submission, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.OralMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(a => a.Assignment.OralMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.OralMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(a => a.OralMark, "", new { @class = "text-danger" })
+                            @Html.EditorFor(a => a.Assignment.OralMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(a => a.Assignment.OralMark, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(a => a.TotalMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(a => a.Assignment.TotalMark, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(a => a.TotalMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(a => a.TotalMark, "", new { @class = "text-danger" })
+                            @Html.EditorFor(a => a.Assignment.TotalMark, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(a => a.Assignment.TotalMark, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    @if (Model.Courses.Count > 0 && Model.Courses.Count < 8)
+                    @if (Model.Assignment.Courses.Count > 0 && Model.Assignment.Courses.Count < 8)
                     {
                         <label class="h6">Selected Courses</label>
                         <ul class="list-unstyled">
-                            @foreach (var course in Model.Courses)
+                            @foreach (var course in Model.Assignment.Courses)
                             {
                                 <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
                             }
@@ -72,19 +72,19 @@
                     <button id="crsEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Courses</button>
 
                     <div id="editCrs" class="form-group mb-5">
-                        <label class="col-md-4 col-form-label" for="courseEdit">Courses</label>
+                        <label class="col-md-4 col-form-label" for="CourseEdit">Courses</label>
                         <div class="col-md-6 offset-md-3">
-                            @Html.ListBox("courseEdit", null, new { @class = "selectpicker form-control ", multiple = "multiple" })
+                            @Html.ListBox("CourseEdit", null, new { @class = "selectpicker form-control ", multiple = "multiple" })
                         </div>
                     </div>
 
                     <br />
 
-                    @if (Model.Students.Count > 0 && Model.Students.Count < 10)
+                    @if (Model.Assignment.Students.Count > 0 && Model.Assignment.Students.Count < 10)
                     {
                         <label class="h6">Selected Students</label>
                         <ul class="list-unstyled">
-                            @foreach (var student in Model.Students)
+                            @foreach (var student in Model.Assignment.Students)
                             {
                                 <li class="form-check-inline"><i class="fa fa-check-circle-o"> @student.FirstName @student.LastName</i> </li>
                             }
@@ -94,9 +94,9 @@
                     <button id="stdEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Students</button>
 
                     <div id="editStd" class="form-group mb-5">
-                        <label class="col-md-4 col-form-label" for="studentEdit">Students</label>
+                        <label class="col-md-4 col-form-label" for="StudentEdit">Students</label>
                         <div class="col-md-6 offset-md-3">
-                            @Html.ListBox("studentEdit", null, new { @class = "selectpicker form-control ", multiple = "multiple" })
+                            @Html.ListBox("StudentEdit", null, new { @class = "selectpicker form-control ", multiple = "multiple" })
                         </div>
                     </div>
 

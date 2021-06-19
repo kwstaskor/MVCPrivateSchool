@@ -13,10 +13,8 @@ namespace MVCSchool.UnitOfWork.Repositories
             get { return Context as ApplicationDbContext; }
         }
 
-        public AssignmentsRepos(ApplicationDbContext context)
-            : base(context)
+        public AssignmentsRepos(ApplicationDbContext context) : base(context)
         {
-
         }
 
         public void AssignCoursesToAssignment(Assignment assignment, int[] courseEdit)

@@ -15,7 +15,6 @@ namespace MVCSchool.UnitOfWork.Repositories
 
         public StudentsRepos(ApplicationDbContext context) : base(context)
         {
-          
         }
 
         public void AssignCoursesToStudent(Student student, int[] courseEdit)

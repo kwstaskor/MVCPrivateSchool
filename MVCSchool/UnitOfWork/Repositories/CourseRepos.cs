@@ -10,10 +10,8 @@ namespace MVCSchool.UnitOfWork.Repositories
             get { return Context as ApplicationDbContext; }
         }
 
-        public CourseRepos(ApplicationDbContext context)
-            : base(context)
+        public CourseRepos(ApplicationDbContext context) : base(context)
         {
-
         }
 
         public void AssignStudentsToCourse(Course course, int[] studentIds)

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using PagedList;
 
 namespace MVCSchool.Models.ViewModels
 {
@@ -11,5 +9,10 @@ namespace MVCSchool.Models.ViewModels
         public IEnumerable<Assignment> Assignments { get; set; }
         public IEnumerable<Student> Students { get; set; }
         public IEnumerable<Trainer> Trainers { get; set; }
+        
+        public IPagedList<Course> PagedCourses { get; set; }
+        public IPagedList<Assignment> PagedAssignments { get; set; }
+        public IPagedList<Student> PagedStudents { get; set; }
+        public IPagedList<Trainer> PagedTrainers { get; set; }
     }
 }

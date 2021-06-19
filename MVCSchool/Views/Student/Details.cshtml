@@ -8,8 +8,7 @@
     <ul class="list-unstyled">
         <li><strong>@Html.DisplayNameFor(s => s.FirstName)</strong> @Model.FirstName</li>
         <li><strong>@Html.DisplayNameFor(s => s.LastName)</strong> @Model.LastName</li>
-        <li><strong>@Html.DisplayNameFor(s => s.TuitionFee)</strong> @Model.TuitionFee€</li>
-        <li><strong>@Html.DisplayNameFor(s => s.DateOfBirth)</strong> @Model.DateOfBirth.ToString("yyyy MMMM dd")</li>
+        <li><strong>@Html.DisplayNameFor(s => s.Age)</strong> @Model.Age</li>
     </ul>
     @if (Model.Courses.Count > 0)
     {
@@ -21,7 +20,7 @@
             }
         </ul>
     }
-    
+
     @if (Model.Assignments.Count > 0)
     {
         <h5>Assignments For @Model.FirstName</h5>
@@ -33,5 +32,12 @@
         </ul>
     }
 
-    @Html.ActionLink("Return", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm" })
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Return to Manage", "Index", "Admin", null, new { @class = "btn btn-outline-info btn-sm m-3" })
+        @Html.ActionLink("Return to Students", "Student", "Student", null, new { @class = "btn btn-outline-info btn-sm" }) }
+    else
+    {
+        @Html.ActionLink("Return", "Student", "Student", null, new { @class = "btn btn-outline-info btn-sm" })
+    }
 </div>

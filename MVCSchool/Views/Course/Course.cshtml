@@ -4,77 +4,26 @@
     ViewBag.Title = "Courses";
 }
 
+<div class="container">
+    <h3 class="text-center m-5">Our Courses</h3>
+    <div class="row m-2">
+        @foreach (var course in Model)
+        {
 
-<div class="container-fluid">
-    <h2 class="m-4 text-center">Courses</h2>
+            <div class="m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><a class="text-decoration-none" href="~/Course/Details/@course.CourseId">@course.Title</a></h5>
+                        <ul class="list-unstyled">
+                            <li><strong>Stream:</strong> @course.Stream</li>
+                            <li><strong>Type:</strong> @course.Type</li>
+                            <li><strong>Duration:</strong> @course.Duration</li>
+                        </ul>
+                        <a href="~/Course/Details/@course.CourseId" class="btn btn-outline-info btn-sm">More Details</a>
+                    </div>
+                </div>
+            </div>
 
-    <div class="container pull-left mt-1 mb-1">
-        <div class="input-group rounded">
-            @using (@Html.BeginForm("Course", "Course", FormMethod.Get , new {@class = "form-inline"}))
-            {
-                @Html.TextBox("searchByName", null, new { @class = "form-control", placeholder = "Search", type = "search" })
-                <input type="hidden" name="sortOrder" value="ViewBag.CurrentSortOrder" />
-
-                <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
-                <input id="resetButton" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
-            }
-        </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-light table-striped text-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th>
-                        @Html.ActionLink("Title", "Course", "Course", new { sortOrder = ViewBag.TitleSort, searchByName = ViewBag.CurrentName }, new { style = "text-decoration:none" })
-
-                    </th>
-                    <th>
-                        @Html.ActionLink("Stream", "Course", "Course", new { sortOrder = ViewBag.StreamSort, searchByName = ViewBag.CurrentName }, new { style = "text-decoration:none" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Type", "Course", "Course", new { sortOrder = ViewBag.TypeSort, searchByName = ViewBag.CurrentName }, new { style = "text-decoration:none" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Start Date", "Course", "Course", new { sortOrder = ViewBag.SdSort, searchByName = ViewBag.CurrentName }, new { style = "text-decoration:none" })
-                    </th>
-                    <th>
-                        @Html.ActionLink("End Date", "Course", "Course", new { sortOrder = ViewBag.EdSort, searchByName = ViewBag.CurrentName }, new { style = "text-decoration:none" })
-                    </th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var course in Model)
-                {
-                    <tr id="@course.CourseId">
-                        <td>@course.Title</td>
-                        <td>@course.Stream</td>
-                        <td>@course.Type</td>
-                        <td>@course.StartDate.ToString("yyyy MMMM dd")</td>
-                        <td>@course.EndDate.ToString("yyyy MMMM dd")</td>
-                        <td>
-                            @Html.ActionLink("Info", "Details", new { id = course.CourseId }, new { @class = "btn btn-sm btn-outline-info m-1" })
-                            @Html.ActionLink("Edit", "Edit", new { id = course.CourseId }, new { @class = "btn btn-sm btn-success m-1" })
-                            @Html.ActionLink("Delete", "Delete", new { id = course.CourseId }, new { @class = "btn btn-sm btn-danger m-1" })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        @Html.ActionLink("Add Course", "Create", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
-        @Html.ActionLink("Return", "Index", "Home", null, new { @class = "btn btn-outline-info btn-sm" })
+        }
     </div>
 </div>
-
-
-@section scripts
-{
-    <script>
-        $("#resetButton").click(function (e) {
-
-            $("#searchByName").val("");
-        }
-        );
-    </script>
-}
-

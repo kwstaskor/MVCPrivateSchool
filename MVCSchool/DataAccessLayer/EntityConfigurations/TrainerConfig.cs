@@ -18,6 +18,14 @@ namespace MVCSchool.DataAccessLayer.EntityConfigurations
             Property(t => t.Subject)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            Property(t => t.YearsOfExperience)
+                .IsRequired()
+                .HasMaxLength(5);
+
+            Property(t => t.Bio)
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

@@ -8,11 +8,12 @@
         <li><strong>@Html.DisplayNameFor(t=>t.FirstName)</strong> @Model.FirstName</li>
         <li><strong>@Html.DisplayNameFor(t => t.LastName)</strong> @Model.LastName</li>
         <li><strong>@Html.DisplayNameFor(t => t.Subject)</strong> @Model.Subject</li>
+        <li><strong>@Html.DisplayNameFor(t => t.YearsOfExperience)</strong> @Model.YearsOfExperience</li>
     </ul>
 
     @if (Model.Courses.Count > 0)
     {
-        <h5>Courses For @Model.FirstName</h5>
+        <h5>@Model.FirstName 's Courses</h5>
         <ul>
             @foreach (var course in Model.Courses)
             {
@@ -20,6 +21,17 @@
             }
         </ul>
     }
+    
+    @if (User.IsInRole("Admin"))
+    { 
+        @Html.ActionLink("Return to Manage", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm m-3" })
+        @Html.ActionLink("Return to Trainers", "Trainer","Trainer", null, new { @class = "btn btn-outline-info btn-sm m-3" })
+    }
+    else
+    {
+        @Html.ActionLink("Return", "Trainer","Trainer", null, new { @class = "btn btn-outline-info btn-sm m-3" })
+    }
 
-    @Html.ActionLink("Return", "Index","Admin", null, new { @class = "btn btn-outline-info btn-sm" })
+
+   
 </div>

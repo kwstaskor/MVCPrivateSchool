@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using FluentValidation.Attributes;
 using MVCSchool.Models.Validations;
 
@@ -35,5 +36,9 @@ namespace MVCSchool.Models
         public virtual ICollection<Course> Courses { get; set; }
 
         public virtual ICollection<Assignment> Assignments { get; set; }
+
+
+        [NotMapped] 
+        public int Age => DateTime.Now.Year - DateOfBirth.Year;
     }
 }

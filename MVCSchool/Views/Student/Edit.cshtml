@@ -1,4 +1,4 @@
-﻿@model MVCSchool.Models.Student
+﻿@model MVCSchool.Models.ViewModels.StudentViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -16,47 +16,47 @@
                     <h6 class="text-center">Edit Student</h6>
                 </div>
 
-                @Html.HiddenFor(s => s.StudentId)
+                @Html.HiddenFor(s => s.Student.StudentId)
 
                 <div class="card-body">
                     <div class="form-group">
-                        @Html.LabelFor(s => s.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(s => s.Student.FirstName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(s => s.FirstName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(s => s.FirstName, "", new { @class = "text-danger" })
+                            @Html.EditorFor(s => s.Student.FirstName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.Student.FirstName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(s => s.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(s => s.Student.LastName, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(s => s.LastName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(s => s.LastName, "", new { @class = "text-danger" })
+                            @Html.EditorFor(s => s.Student.LastName, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.Student.LastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(s => s.Student.DateOfBirth, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <br />
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(s => s.DateOfBirth, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "date", min = DateTime.Now.Year - 100, max = DateTime.Now.Year - 18 } })
-                            @Html.ValidationMessageFor(s => s.DateOfBirth, "", new { @class = "text-danger" })
+                            @Html.EditorFor(s => s.Student.DateOfBirth, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "date", min = DateTime.Now.Year - 100, max = DateTime.Now.Year - 18 } })
+                            @Html.ValidationMessageFor(s => s.Student.DateOfBirth, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(s => s.TuitionFee, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
+                        @Html.LabelFor(s => s.Student.TuitionFee, new { htmlAttributes = new { @class = "col-md-4 col-form-label text-md-right" } }) <strong style="color:#b22222">*</strong>
                         <div class="col-md-6 offset-md-3">
-                            @Html.EditorFor(s => s.TuitionFee, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                            @Html.ValidationMessageFor(s => s.TuitionFee, "", new { @class = "text-danger" })
+                            @Html.EditorFor(s => s.Student.TuitionFee, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(s => s.Student.TuitionFee, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     
-                    @if (Model.Courses.Count > 0 && Model.Courses.Count < 8)
+                    @if (Model.Student.Courses.Count > 0 && Model.Student.Courses.Count < 8)
                     {
                         <label class="h6">Selected Courses</label>
                         <ul class="list-unstyled">
-                            @foreach (var course in Model.Courses)
+                            @foreach (var course in Model.Student.Courses)
                             {
                                 <li class="form-check-inline"><i class="fa fa-check-circle-o"> @course.Title</i> </li>
                             }
@@ -74,11 +74,11 @@
 
                     <br />
                     
-                    @if (Model.Assignments.Count > 0 && Model.Assignments.Count < 8)
+                    @if (Model.Student.Assignments.Count > 0 && Model.Student.Assignments.Count < 8)
                     {
                         <label class="h6">Selected Assignments</label>
                         <ul class="list-unstyled">
-                            @foreach (var assignment in Model.Assignments)
+                            @foreach (var assignment in Model.Student.Assignments)
                             {
                                 <li class="form-check-inline"><i class="fa fa-check-circle-o"> @assignment.Title</i> </li>
                             }
@@ -88,9 +88,9 @@
                     <button id="assEBtn" type="button" class="btn btn-sm btn-primary mb-2">Edit Assignment</button>
 
                     <div id="editAss" class="form-group mb-5">
-                        <label class="col-md-4 col-form-label" for="assignmentEdit">Assignment</label>
+                        <label class="col-md-4 col-form-label" for="AssignmentEdit">Assignment</label>
                         <div class="col-md-6 offset-md-3">
-                            @Html.ListBox("assignmentEdit", null, new { @class = "selectpicker form-control " })
+                            @Html.ListBox("AssignmentEdit", null, new { @class = "selectpicker form-control " })
                         </div>
                     </div>
 

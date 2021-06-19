@@ -186,11 +186,13 @@ C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.AspN
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\Newtonsoft.Json.xml
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.csproj.AssemblyReference.cache
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.Migrations.initialModel.resources
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.Migrations.ChangingStringLength.resources
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.Migrations.SeedUsers.resources
-C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.csproj.GenerateResource.cache
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.csproj.CoreCompileInputs.cache
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.csproj.CopyComplete
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.dll
 C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.pdb
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.dll
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.Mvc.dll
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.xml
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\bin\PagedList.Mvc.xml
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.Migrations.Initial.resources
+C:\Users\Κώστας\source\repos\MVCPrivateSchool\MVCSchool\obj\Debug\MVCSchool.csproj.GenerateResource.cache

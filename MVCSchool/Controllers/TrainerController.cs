@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using MVCSchool.Models;
+using MVCSchool.Models.ViewModels;
 using MVCSchool.UnitOfWork;
 
 namespace MVCSchool.Controllers
 {
+    [Authorize]
     public class TrainerController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -19,7 +20,7 @@ namespace MVCSchool.Controllers
         {
             var trainers = unitOfWork.Trainers.Get();
 
-            return User.IsInRole("Admin") ? View("Trainer", trainers) : View("TrainerReadOnly", trainers);
+            return View("Trainer", trainers);
         }
 
         public ActionResult Details(int? id)
@@ -60,8 +61,8 @@ namespace MVCSchool.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            CreatingAddViewBag();
-            return View();
+            var vm = new TrainerViewModel(unitOfWork);
+            return View(vm);
         }
 
         [HttpPost]
@@ -70,8 +71,8 @@ namespace MVCSchool.Controllers
         {
             if (!ModelState.IsValid)
             {
-                CreatingAddViewBag();
-                return RedirectToAction("Create", trainer);
+                var vm = new TrainerViewModel(unitOfWork);
+                return RedirectToAction("Create", vm);
             }
 
             unitOfWork.Trainers.AssignCoursesToTrainer(trainer, courseList);
@@ -90,9 +91,9 @@ namespace MVCSchool.Controllers
 
             if (trainer == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            CreatingEditViewBag(trainer);
+            var vm = new TrainerViewModel(unitOfWork , trainer);
 
-            return View(trainer);
+            return View(vm);
         }
 
         [HttpPost]
@@ -101,8 +102,8 @@ namespace MVCSchool.Controllers
         {
             if (!ModelState.IsValid)
             {
-                CreatingEditViewBag(trainer);
-                return RedirectToAction("Edit", trainer);
+               var vm = new TrainerViewModel(unitOfWork , trainer);
+                return RedirectToAction("Edit", vm);
             }
 
             unitOfWork.Trainers.AttachTrainerCourses(trainer);
@@ -112,27 +113,6 @@ namespace MVCSchool.Controllers
             unitOfWork.Save();
 
             return RedirectToAction("Index", "Admin");
-        }
-
-        private void CreatingAddViewBag()
-        {
-            var courses = unitOfWork.Courses.Get();
-            var selectList = new MultiSelectList(courses, "CourseId", "Title");
-            ViewBag.courseList = selectList;
-        }
-
-        private void CreatingEditViewBag(Trainer trainer)
-        {
-            var courses = unitOfWork.Courses.Get();
-            unitOfWork.Trainers.AttachTrainerCourses(trainer);
-            var trainerCoursesIds = trainer.Courses.Select(course => course.CourseId);
-
-            ViewBag.CourseEdit = courses.ToList().Select(c => new SelectListItem()
-            {
-                Value = c.CourseId.ToString(),
-                Text = string.Format($"{c.Title} {c.Stream}"),
-                Selected = trainerCoursesIds.Any(selected => selected == c.CourseId)
-            });
         }
 
         protected override void Dispose(bool disposing)

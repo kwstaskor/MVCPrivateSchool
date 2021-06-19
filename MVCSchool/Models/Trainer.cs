@@ -20,6 +20,15 @@ namespace MVCSchool.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "Years Of Experience")]
+        public string YearsOfExperience { get; set; }
+
+        [Display(Name = "About")]
+        public string Bio { get; set; }
+
+        [Display(Name = "Photo")]
+        public string PhotoUrl { get; set; }
+
         [Display(Name = "Teaching Subject")]
         public string Subject { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using FluentValidation.Attributes;
 using MVCSchool.Models.Validations;
 
@@ -37,5 +38,7 @@ namespace MVCSchool.Models
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Trainer> Trainers { get; set; }
+
+        [NotMapped] public string Duration => $"{(EndDate - StartDate).Days} Days";
     }
 }

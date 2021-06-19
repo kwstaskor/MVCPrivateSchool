@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using MVCSchool.Helper;
 using MVCSchool.Models;
 using MVCSchool.Models.ViewModels;
 using MVCSchool.UnitOfWork;
 
 namespace MVCSchool.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -18,7 +20,7 @@ namespace MVCSchool.Controllers
         }
 
         public ActionResult Index(string searchByNameA, string searchByNameC, string searchByNameS, string searchByNameT,
-            string sortOrder, int? pSize, int? pNumber)
+            string sortOrder, int? pageC, int? pageA, int? pageS, int? pageT)
         {
             var viewModel = new AdminViewModel
             {
@@ -28,9 +30,11 @@ namespace MVCSchool.Controllers
                 Assignments = unitOfWork.Assignments.Get()
             };
 
-            FilteringViewModel(searchByNameA, searchByNameC, searchByNameS,searchByNameT, viewModel);
+            FilteringViewModel(searchByNameA, searchByNameC, searchByNameS, searchByNameT, viewModel);
 
             SortingViewModel(sortOrder, viewModel);
+
+            AdminUtilities.PagingViewModel(pageC, pageA, pageS, pageT, viewModel);
 
             if (User.IsInRole("Admin"))
             {
@@ -141,7 +145,7 @@ namespace MVCSchool.Controllers
             ViewBag.FirstNameTSort = string.IsNullOrEmpty(sortOrder) ? "FirstNameTDesc" : "";
             ViewBag.LastNameTSort = sortOrder == "LastNameTAsc" ? "LastNameTDesc" : "LastNameTAsc";
             ViewBag.SubjectSort = sortOrder == "SubjectAsc" ? "DobSDesc" : "SubjectAsc";
-          
+
 
             switch (sortOrder)
             {
@@ -152,7 +156,7 @@ namespace MVCSchool.Controllers
 
                 case "SubjectAsc": trainers = trainers.OrderBy(t => t.Subject).ToList(); break;
                 case "SubjectDesc": trainers = trainers.OrderByDescending(t => t.Subject).ToList(); break;
-               
+
 
                 default: trainers = trainers.OrderBy(s => s.FirstName).ToList(); break;
             }
@@ -169,50 +173,10 @@ namespace MVCSchool.Controllers
             ViewBag.CurrentNameS = searchByNameS;
             ViewBag.CurrentNameT = searchByNameT;
 
-            viewModel.Courses = FilteringCourses(searchByNameC, viewModel.Courses);
-            viewModel.Assignments = FilteringAssignments(searchByNameA, viewModel.Assignments);
-            viewModel.Students = FilteringStudents(searchByNameS, viewModel.Students);
-            viewModel.Trainers = FilteringTrainers(searchByNameT, viewModel.Trainers);
-        }
-
-        private IEnumerable<Course> FilteringCourses(string searchByNameC, IEnumerable<Course> courses)
-        {
-            if (!string.IsNullOrWhiteSpace(searchByNameC))
-            {
-                courses = courses.Where(c => c.Title.ToUpper().Contains(searchByNameC.ToUpper())).ToList();
-            }
-
-            return courses;
-        }
-
-        private IEnumerable<Student> FilteringStudents(string searchByNameS, IEnumerable<Student> students)
-        {
-            if (!string.IsNullOrWhiteSpace(searchByNameS))
-            {
-                students = students.Where(s => s.FirstName.ToUpper().Contains(searchByNameS.ToUpper())).ToList();
-            }
-
-            return students;
-        }
-
-        private IEnumerable<Assignment> FilteringAssignments(string searchByNameA, IEnumerable<Assignment> assignments)
-        {
-            if (!string.IsNullOrWhiteSpace(searchByNameA))
-            {
-                assignments = assignments.Where(c => c.Title.ToUpper().Contains(searchByNameA.ToUpper())).ToList();
-            }
-
-            return assignments;
-        }
-
-        private IEnumerable<Trainer> FilteringTrainers(string searchByNameT, IEnumerable<Trainer> trainers)
-        {
-            if (!string.IsNullOrWhiteSpace(searchByNameT))
-            {
-                trainers = trainers.Where(s => s.FirstName.ToUpper().Contains(searchByNameT.ToUpper())).ToList();
-            }
-
-            return trainers;
+            viewModel.Courses = AdminUtilities.FilteringCourses(searchByNameC, viewModel.Courses);
+            viewModel.Assignments = AdminUtilities.FilteringAssignments(searchByNameA, viewModel.Assignments);
+            viewModel.Students = AdminUtilities.FilteringStudents(searchByNameS, viewModel.Students);
+            viewModel.Trainers = AdminUtilities.FilteringTrainers(searchByNameT, viewModel.Trainers);
         }
 
         protected override void Dispose(bool disposing)

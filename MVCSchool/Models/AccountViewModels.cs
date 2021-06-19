@@ -48,6 +48,7 @@ namespace MVCSchool.Models
 
     public class LoginViewModel
     {
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
