@@ -222,6 +222,12 @@ table {
         font-size: 4em;
         padding: 2rem;
     }
+
+    #NumbersGame, #BrickBraker {
+        width: 900px;
+        height: 650px;
+    }
+    
 }
 
 @media (max-width: 768px) {
@@ -254,6 +260,11 @@ table {
     .social a {
         font-size: 2.5em;
         padding: 1.2rem;
+    }
+
+    #NumbersGame, #BrickBraker {
+        width: 500px;
+        height: 250px;
     }
 }
 
@@ -291,6 +302,12 @@ table {
 
     .iconimg {
         width: 50px;
+        height: auto;
+    }
+
+
+    #NumbersGame, #BrickBraker {
+        width: auto;
         height: auto;
     }
 }
