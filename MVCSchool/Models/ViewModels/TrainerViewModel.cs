@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MVCSchool.UnitOfWork;
@@ -9,13 +10,10 @@ namespace MVCSchool.Models.ViewModels
     {
         private readonly IUnitOfWork unitOfWork;
         public Trainer Trainer { get; set; }
-
+        
         public MultiSelectList CourseList
         {
-            get
-            {
-                return new MultiSelectList(unitOfWork.Courses.Get(), "CourseId", "Title");
-            }
+            get => new MultiSelectList(unitOfWork.Courses.Get(), "CourseId", "Title");
         }
 
         public IEnumerable<SelectListItem> CourseEdit

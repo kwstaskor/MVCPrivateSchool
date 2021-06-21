@@ -67,7 +67,7 @@ namespace MVCSchool.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbCreate([Bind(Include = "TrainerId , FirstName , LastName , Subject")] Trainer trainer, int[] courseList)
+        public ActionResult DbCreate([Bind(Include = "TrainerId , FirstName , LastName , YearsOfExperience , PhotoUrl , Subject , Bio")] Trainer trainer, int[] courseList)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace MVCSchool.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DbEdit([Bind(Include = "TrainerId , FirstName , LastName ,Subject")] Trainer trainer, int[] courseEdit)
+        public ActionResult DbEdit([Bind(Include = "TrainerId , FirstName , LastName , YearsOfExperience , PhotoUrl , Subject , Bio")] Trainer trainer, int[] courseEdit)
         {
             if (!ModelState.IsValid)
             {

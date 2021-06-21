@@ -1,0 +1,67 @@
+﻿@model MVCSchool.Models.ViewModels.AdminViewModel
+@using PagedList.Mvc;
+<div class="col-md-6">
+    <h2 class="m-4 text-center">Courses</h2>
+
+    <div class="container pull-left mt-1 mb-1">
+        <div class="input-group rounded">
+            @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                @Html.TextBox("searchByNameC", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                <input type="hidden" name="sortOrder" value="@Model.CurrentSortOrder" />
+
+                <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                <input id="resetButtonC" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-light table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.ActionLink("Title", "Index", "Admin", new { sortOrder = Model.TitleCSort, searchByNameC = @Model.SearchByNameCrs }, new { style = "text-decoration:none" })
+
+                    </th>
+                    <th>
+                        @Html.ActionLink("Stream", "Index", "Admin", new { sortOrder = Model.StreamSort, searchByNameC = @Model.SearchByNameCrs }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Type", "Index", "Admin", new { sortOrder = Model.TypeSort, searchByNameC = @Model.SearchByNameCrs }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Start Date", "Index", "Admin", new { sortOrder = Model.SdSort, searchByNameC = @Model.SearchByNameCrs }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("End Date", "Index", "Admin", new { sortOrder = Model.EdSort, searchByNameC = @Model.SearchByNameCrs }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model.PagedCourses)
+                {
+                    <tr id="@course.CourseId">
+                        <td>@course.Title</td>
+                        <td>@course.Stream</td>
+                        <td>@course.Type</td>
+                        <td>@course.StartDate.ToString("yyyy MMMM dd")</td>
+                        <td>@course.EndDate.ToString("yyyy MMMM dd")</td>
+                        <td>
+                            @Html.ActionLink("Info", "Details", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                            @Html.ActionLink("Edit", "Edit", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-success m-1" })
+                            @Html.ActionLink("Delete", "Delete", "Course", new { id = course.CourseId }, new { @class = "btn btn-sm btn-danger m-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        Page @(Model.PagedCourses.PageCount < Model.PagedCourses.PageNumber ? 0 : Model.PagedCourses.PageNumber) of @Model.PagedCourses.PageCount
+        @Html.PagedListPager(Model.PagedCourses, x => @Url.Action("Index", "Admin", new { pageC = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
+
+        @Html.ActionLink("Add Course", "Create", "Course", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+    </div>
+</div>

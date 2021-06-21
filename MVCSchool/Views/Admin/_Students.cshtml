@@ -1,0 +1,61 @@
+﻿@model MVCSchool.Models.ViewModels.AdminViewModel
+@using PagedList.Mvc;
+
+<div class="col-md-6">
+    <h2 class="m-4 text-center">Students</h2>
+
+    <div class="container pull-left mt-1 mb-1">
+        <div class="input-group rounded">
+            @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                @Html.TextBox("searchByNameS", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                <input type="hidden" name="sortOrder" value="@Model.CurrentSortOrder" />
+
+                <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                <input id="resetButtonS" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-light table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.ActionLink("First Name", "Index", "Admin", new { sortOrder = Model.FirstNameSSort, searchByNameS = Model.SearchByNameStd }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Last Name", "Index", "Admin", new { sortOrder = Model.LastNameSSort, searchByNameS = Model.SearchByNameStd }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Date of Birth", "Index", "Admin", new { sortOrder = Model.DobSSort, searchByNameS = Model.SearchByNameStd }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Tuition Fee", "Index", "Admin", new { sortOrder = Model.FeeSSort, searchByNameS = Model.SearchByNameStd }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.PagedStudents)
+                {
+                    <tr id="@student.StudentId">
+                        <td>@student.FirstName</td>
+                        <td>@student.LastName</td>
+                        <td>@student.DateOfBirth.ToString("yyyy MMMM dd")</td>
+                        <td>@student.TuitionFee &euro;</td>
+                        <td>
+                            @Html.ActionLink("Info", "Details", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                            @Html.ActionLink("Edit", "Edit", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-success m-1" })
+                            @Html.ActionLink("Delete", "Delete", "Student", new { id = student.StudentId }, new { @class = "btn btn-sm btn-danger m-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        Page @(Model.PagedStudents.PageCount < Model.PagedStudents.PageNumber ? 0 : Model.PagedStudents.PageNumber) of @Model.PagedStudents.PageCount
+        @Html.PagedListPager(Model.PagedStudents, x => @Url.Action("Index", "Admin", new { pageS = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
+        @Html.ActionLink("Add Student", "Create", "Student", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+    </div>
+</div>

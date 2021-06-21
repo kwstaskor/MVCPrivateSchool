@@ -92,7 +92,7 @@ namespace MVCSchool.Models.ViewModels
             this.unitOfWork = unitOfWork;
         }
 
-        public CourseViewModel(IUnitOfWork unitOfWork , Course course)
+        public CourseViewModel(IUnitOfWork unitOfWork, Course course)
         {
             this.unitOfWork = unitOfWork;
             Course = course;

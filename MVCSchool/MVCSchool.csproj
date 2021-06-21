@@ -205,7 +205,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\AdminUtilities.cs" />
+    <Compile Include="Helper\Filtering.cs" />
+    <Compile Include="Helper\Paging.cs" />
+    <Compile Include="Helper\Sorting.cs" />
     <Compile Include="Migrations\202106190004050_Initial.cs" />
     <Compile Include="Migrations\202106190004050_Initial.designer.cs">
       <DependentUpon>202106190004050_Initial.cs</DependentUpon>
@@ -251,6 +253,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\img\background4.jpg" />
+    <Content Include="Content\img\background5.jpg" />
+    <Content Include="Content\img\background6.jpg" />
+    <Content Include="Content\img\desk.png" />
+    <Content Include="Content\img\footerlogo.jpg" />
+    <Content Include="Content\img\logo1.png" />
+    <Content Include="Content\img\mac.png" />
+    <Content Include="Content\img\philosophy.jpg" />
+    <Content Include="Content\img\photo_not_available_large.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -571,13 +582,14 @@
     <Content Include="Views\Assignment\Delete.cshtml" />
     <Content Include="Views\Assignment\Create.cshtml" />
     <Content Include="Views\Assignment\Edit.cshtml" />
-    <Content Include="Views\Student\StudentReadOnly.cshtml" />
-    <Content Include="Views\Trainer\TrainerReadOnly.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\_Courses.cshtml" />
+    <Content Include="Views\Admin\_Assignments.cshtml" />
+    <Content Include="Views\Admin\_Students.cshtml" />
+    <Content Include="Views\Admin\_Trainers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

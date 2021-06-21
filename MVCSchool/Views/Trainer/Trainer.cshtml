@@ -15,12 +15,22 @@
                         <h5 class="card-title"><a class="text-decoration-none" href="~/Trainer/Details/@trainer.TrainerId">@trainer.FirstName @trainer.LastName</a></h5>
                         <ul class="list-unstyled">
                             <li>
-                                <img src="@trainer.PhotoUrl" alt=""/></li>
+                                @if (!(string.IsNullOrEmpty(trainer.PhotoUrl)))
+                                {
+                                    <img class="img-fluid" src="@trainer.PhotoUrl" style="max-width: 250px; max-height: 250px;" alt="" />
+                                }
+                                else
+                                {
+                                    <img class="img-fluid" src="~/Content/img/photo_not_available_large.jpg" style="max-width: 250px; max-height: 250px;" />
+                                }
+                            </li>
                             <li><strong>Years of Experience:</strong> @trainer.YearsOfExperience</li>
                             <li><strong>Subject:</strong> @trainer.Subject</li>
                             <li>
                                 <strong>About</strong>
-                                <p>@trainer.Bio</p>
+                                <text class="d-md-block" style="max-width: 250px;">
+                                    @trainer.Bio
+                                </text>
                             </li>
                         </ul>
                         <a href="~/Trainer/Details/@trainer.TrainerId" class="btn btn-outline-info btn-sm">More Details</a>

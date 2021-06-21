@@ -42,6 +42,7 @@ namespace MVCSchool.UnitOfWork.Repositories
 
         public void AttachTrainerCourses(Trainer trainer)
         {
+
             DbContext.TrainersDbSet.Attach(trainer);
 
             DbContext.Entry(trainer).Collection("Courses").Load();

@@ -1,0 +1,66 @@
+﻿@model MVCSchool.Models.ViewModels.AdminViewModel
+@using PagedList.Mvc;
+
+<div class="col-md-6">
+    <h2 class="m-4 text-center">Assignments</h2>
+
+    <div class="container pull-left mt-1 mb-1">
+        <div class="input-group rounded">
+            @using (@Html.BeginForm("Index", "Admin", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                @Html.TextBox("searchByNameA", null, new { @class = "form-control", placeholder = "Search", type = "search" })
+                <input type="hidden" name="sortOrder" value="@Model.CurrentSortOrder" />
+
+                <input class="btn btn-sm btn-outline-success m-1" type="submit" value="Search" />
+                <input id="resetButtonA" class="btn btn-sm btn-outline-secondary  m-1" type="button" value="Reset" />
+            }
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-light table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.ActionLink("Title", "Index", "Admin", new { sortOrder = Model.TitleASort, searchByNameA = Model.SearchByNameAss }, new { style = "text-decoration:none" })
+
+                    </th>
+                    <th>
+                        @Html.ActionLink("Description", "Index", "Admin", new { sortOrder = Model.DescriptionSort, searchByNameA = Model.SearchByNameAss }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Submission Date", "Index", "Admin", new { sortOrder = Model.SubmissionSort, searchByNameA = Model.SearchByNameAss }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Oral Mark", "Index", "Admin", new { sortOrder =  Model.OralSort, searchByNameA = Model.SearchByNameAss }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Total Mark", "Index", "Admin", new { sortOrder = Model.TotalSort, searchByNameA = Model.SearchByNameAss }, new { style = "text-decoration:none" })
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var assignment in Model.PagedAssignments)
+                {
+                    <tr id="@assignment.AssignmentId">
+                        <td>@assignment.Title</td>
+                        <td>@assignment.Description</td>
+                        <td>@assignment.Submission</td>
+                        <td>@assignment.OralMark</td>
+                        <td>@assignment.TotalMark</td>
+                        <td>
+                            @Html.ActionLink("Info", "Details", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-outline-info m-1" })
+                            @Html.ActionLink("Edit", "Edit", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-success m-1" })
+                            @Html.ActionLink("Delete", "Delete", "Assignment", new { id = assignment.AssignmentId }, new { @class = "btn btn-sm btn-danger m-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        Page @(Model.PagedAssignments.PageCount < Model.PagedAssignments.PageNumber ? 0 : Model.PagedAssignments.PageNumber) of @Model.PagedAssignments.PageCount
+        @Html.PagedListPager(Model.PagedAssignments, x => @Url.Action("Index", "Admin", new { pageA = x }), PagedListRenderOptions.TwitterBootstrapPager)
+
+        @Html.ActionLink("Add Assignment", "Create", "Assignment", null, new { @class = "btn btn-sm btn-primary m-1 pull-right" })
+    </div>
+</div>
