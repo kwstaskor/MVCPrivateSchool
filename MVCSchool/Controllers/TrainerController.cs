@@ -55,6 +55,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Trainers.Remove(trainer);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["StatusDel"] = $"You Have Successfully Deleted {trainer.FirstName} {trainer.LastName}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -79,6 +81,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Trainers.Add(trainer);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Created {trainer.FirstName} {trainer.LastName}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -112,6 +116,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Trainers.Edit(trainer);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Edited {trainer.FirstName} {trainer.LastName}";
             return RedirectToAction("Index", "Admin");
         }
 

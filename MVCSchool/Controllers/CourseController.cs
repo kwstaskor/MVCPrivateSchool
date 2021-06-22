@@ -59,6 +59,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Courses.Remove(course);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["StatusDel"] = $"You Have Successfully Deleted {course.Title} {course.Stream}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -87,6 +89,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Courses.Add(course);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Created {course.Title} {course.Stream}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -129,6 +133,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Courses.Edit(course);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Edited {course.Title} {course.Stream}";
             return RedirectToAction("Index", "Admin");
         }
      

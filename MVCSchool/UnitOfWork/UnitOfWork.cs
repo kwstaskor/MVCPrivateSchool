@@ -19,8 +19,7 @@ namespace MVCSchool.UnitOfWork
             Trainers = new TrainersRepos(context);
             Students = new StudentsRepos(context);
         }
-     
-
+        
         public void Dispose()
         {
             context.Dispose();

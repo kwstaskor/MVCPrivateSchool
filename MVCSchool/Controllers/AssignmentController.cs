@@ -57,6 +57,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Assignments.Remove(assignment);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["StatusDel"] = $"You Have Successfully Deleted {assignment.Title} {assignment.Description}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -84,6 +86,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Assignments.Add(assignment);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Created {assignment.Title} {assignment.Description}";
             return RedirectToAction("Index", "Admin");
         }
 
@@ -121,6 +125,8 @@ namespace MVCSchool.Controllers
             unitOfWork.Assignments.Edit(assignment);
             unitOfWork.Save();
 
+            TempData["ShowAlert"] = true;
+            TempData["Status"] = $"You Have Successfully Edited {assignment.Title} {assignment.Description}";
             return RedirectToAction("Index", "Admin");
         }
 

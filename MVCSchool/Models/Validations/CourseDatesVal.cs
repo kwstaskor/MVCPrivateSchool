@@ -21,7 +21,7 @@ namespace MVCSchool.Models.Validations
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            Course course = new Course();
+            var course = new Course();
             var dateEntered = (DateTime)value;
             if (dateEntered < course.StartDate)
             {
